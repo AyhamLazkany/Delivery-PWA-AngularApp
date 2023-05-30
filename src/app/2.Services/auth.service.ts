@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { baseURL } from '../1.Shared/baseurl';
@@ -15,7 +15,6 @@ interface AuthResponse {
 interface credentials {
   authToken: string | any;
   username: string | any;
-  img: string | any;
 }
 
 interface JWTResponse {
@@ -23,6 +22,7 @@ interface JWTResponse {
   status: string;
   user: any;
 }
+
 interface CanResponse {
   success: boolean;
   status: string;
@@ -38,7 +38,7 @@ export class AuthService {
   isAuthenticated: boolean = false;
   authToken: string | any = undefined;
   username: string | any = undefined;
-  img: string | any = undefined;
+  admin: boolean = false;
 
   constructor(private http: HttpClient,
     private ProcessHttpMsgService: ProcessHttpMsgService) {
@@ -46,10 +46,6 @@ export class AuthService {
 
   getUsername(): string {
     return this.username;
-  }
-
-  getImg(): string {
-    return this.img;
   }
 
   getToken(): string {
@@ -60,15 +56,19 @@ export class AuthService {
     this.isAuthenticated = true;
     this.username = credentials.username;
     this.authToken = credentials.authToken;
-    this.img = credentials.img;
   }
 
   destroyUserCredentials() {
     this.isAuthenticated = false;
     this.authToken = undefined;
     this.username = undefined;
-    this.img = undefined;
     localStorage.removeItem(this.TokenKey);
+  }
+
+  storeUserCredentials(credentials: credentials) {
+    console.log('storeUserCredentials ', credentials);
+    localStorage.setItem(this.TokenKey, JSON.stringify(credentials));
+    this.useCredentials(credentials);
   }
 
   loadUserCredentials() {
@@ -80,12 +80,6 @@ export class AuthService {
         this.checkJWTtoken();
       }
     };
-  }
-
-  storeUserCredentials(credentials: credentials) {
-    console.log('storeUserCredentials ', credentials);
-    localStorage.setItem(this.TokenKey, JSON.stringify(credentials));
-    this.useCredentials(credentials);
   }
 
   checkJWTtoken() {
@@ -101,11 +95,11 @@ export class AuthService {
 
   signUp(user: any): Observable<any> {
     return this.http.post<JWTResponse>(baseURL + 'users/signup',
-      { 'username': user.username, 'password': user.password, 'email': user.email, 'phone': user.phone })
+      { 'username': user.username, 'password': user.password, 'phone': user.phone })
       .pipe(map((res) => {
         if (res.success == true)
-          return { success: res.success, status: 'Signup successfully', user: res.user };
-        else
+          return { success: res.success, status: res.status, user: res.user };
+        else 
           return { success: res.success, status: res.status };
       }), catchError(error => this.ProcessHttpMsgService.handleError(error)));
   }
@@ -114,7 +108,8 @@ export class AuthService {
     return this.http.post<AuthResponse>(baseURL + 'users/login',
       { 'username': user.username, 'password': user.password })
       .pipe(map(res => {
-        this.storeUserCredentials({ username: res.user.username, authToken: res.token, img: res.user.img });
+        this.storeUserCredentials({ username: res.user.username, authToken: res.token });
+        this.Credentials = localStorage.getItem(this.TokenKey);
         return { success: res.success, status: res.status, user: res.user };
       }), catchError(error => this.ProcessHttpMsgService.handleError(error)));
   }
@@ -123,13 +118,8 @@ export class AuthService {
     this.destroyUserCredentials();
   }
 
-  isLoggedIn(): Boolean {
+  isLoggedIn(): boolean {
     return this.isAuthenticated;
-  }
-
-  isSeller(username: string): Observable<boolean> {
-    return this.http.get<any>(baseURL + 'users/isSeller/' + username)
-      .pipe(catchError(this.ProcessHttpMsgService.handleError));
   }
 
   getUser(username: string): Observable<any> {
