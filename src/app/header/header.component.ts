@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { AuthService } from '../2.Services/auth.service';
 import { ChangeValueService } from '../2.Services/change-value.service';
 import { Subscription } from 'rxjs';
@@ -9,34 +9,46 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   @ViewChild('btnClose') btnClose: any;
+  @ViewChild('btnProfile') btnProfile: any;
+  showSearch: boolean = false;
   isLogged!: boolean;
+  myusername!: string;
   subscription!: Subscription;
-  username!: string;
-  admin!: boolean;
+  admin!: boolean | undefined;
   user = { username: '', password: '' };
   createdUser = { username: '', password: '', phone: '' };
   SigninerrMess!: string;
   SignupErrMess!: string;
 
   constructor(private authService: AuthService,
-     private CVSrv: ChangeValueService, 
-     @Inject('BaseURL') public baseURL: any) { };
+    private CVSrv: ChangeValueService,
+    @Inject('BaseURL') public baseURL: any) { };
 
   ngOnInit() {
     this.authService.loadUserCredentials();
-    this.isLogged = this.authService.isLoggedIn();
-    this.CVSrv.loggedValue(this.isLogged);
-    this.subscription = this.CVSrv.currentLogged.subscribe((logged) => { if (logged != undefined) this.isLogged = logged } );
+    this.CVSrv.loggedValue(this.authService.isLoggedIn());
+    this.CVSrv.adminValue(this.authService.isAdmin());
+    this.subscription = this.CVSrv.currentLogged.subscribe((Logged) => { if (Logged) this.isLogged = Logged });
     if (this.isLogged) {
-      this.username = this.authService.getUsername();
+      this.CVSrv.usernameValue(this.authService.getUsername());
+      this.subscription = this.CVSrv.currentUsername.subscribe((username) => { if (username) this.myusername = username });
     }
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  clickSearchbtn() {
+    if (this.showSearch == false) this.showSearch = true;
+    else this.showSearch = false;
+  }
+
+  clickProfilebtn() {
+    this.btnProfile.nativeElement.click();
   }
 
   onSubmit() {
@@ -47,17 +59,15 @@ export class HeaderComponent implements OnInit {
           this.isLogged = this.authService.isLoggedIn();
           if (this.isLogged) {
             this.CVSrv.loggedValue(this.isLogged);
-            this.username = this.authService.getUsername();
+            this.myusername = this.authService.getUsername();
           }
           this.btnClose.nativeElement.click();
         } else {
           console.log(res);
         }
-      },
-        errMess => {
-          console.log(errMess);
-          this.SigninerrMess = "The username or password is incorect ";
-        });
+      }, () => {
+        this.SigninerrMess = "اسم المستخدم/كلمة المرور غير صحيح";
+      });
   }
 
   onSignup() {

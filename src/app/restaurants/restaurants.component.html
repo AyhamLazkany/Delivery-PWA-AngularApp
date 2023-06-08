@@ -1,1 +1,104 @@
-<p>restaurants works!</p>
+<section class="shop-list section-padding">
+   <div class="container">
+      <div class="row">
+
+         <div class="col-12">
+            <a href="#"><img class="img-fluid mb-3" src="assets/img/shop.jpg" alt=""></a>
+            <div class="shop-head">
+               <h5 class="mb-3">جميع المطاعم</h5>
+
+            </div>
+            <div class="owl-carousel radio-input col-12 col-md-6">
+               <label class="item">
+                  <input type="radio" id="value-1" name="value-radio" value="value-1" checked>
+                  <span>الجميع</span>
+               </label>
+               <label class="item">
+                  <input type="radio" id="value-2" name="value-radio" value="value-2">
+                  <span>وجبات سريعة</span>
+               </label>
+               <label class="item">
+                  <input type="radio" id="value-3" name="value-radio" value="value-3">
+                  <span>معجنات</span>
+               </label>
+               <label class="item">
+                  <input type="radio" id="value-4" name="value-radio" value="value-4">
+                  <span>كوكيلات</span>
+               </label>
+               <label class="item">
+                  <input type="radio" id="value-5" name="value-radio" value="value-5">
+                  <span>مطعم عائلي</span>
+               </label>
+               <span class="selection"></span>
+            </div><br>
+            <div class="row no-gutters">
+               <div class="col-md-4" *ngIf="admin">
+                  <h5>
+                     <span class="badge badge-pill badge-success p-2 mx-1">مفتوح</span>
+                     <span class="badge badge-pill badge-danger p-2 mx-1">مغلق</span>
+                  </h5>
+                  <div class="product">
+                     <a routerLink="/creatres">
+                        <div class="product-header">
+                           <img class="img-fluid" src="{{baseURL}}assets/img/plus.png">
+                        </div>
+                        <div class="product-body">
+                           <h5>اضافة مطعم جديد</h5>
+                           <h6><strong>&nbsp;</strong></h6>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+               <div class="col-6 col-md-4" *ngFor="let res of restaurants">
+                  <h5 *ngIf="admin">
+                     <span *ngIf="res.openned" (click)="close(res._id)"
+                        class="badge badge-pill badge-success p-2">مفتوح</span>
+                     <span *ngIf="!res.openned" (click)="open(res._id)"
+                        class="badge badge-pill badge-danger p-2">مغلق</span>
+                  </h5>
+                  <div class="product">
+                     <a routerLink="/">
+                        <div class="product-header">
+                           <img class="img-fluid" src="{{baseURL + res.img}}">
+                           <span *ngIf="res.openned" class="veg text-success mdi mdi-circle"></span>
+                           <span *ngIf="!res.openned" class="veg text-danger mdi mdi-circle"></span>
+                        </div>
+                        <div class="product-body">
+                           <h5>{{res.name}}</h5>
+                           <h6><strong><span class="mdi mdi-approval"></span>نوع المطعم :</strong> {{res.type}}</h6>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<section class="section-padding bg-white border-top">
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-4 col-sm-6">
+            <div class="feature-box">
+               <i class="mdi mdi-truck-fast"></i>
+               <h6>Free & Next Day Delivery</h6>
+               <p>Lorem ipsum dolor sit amet, cons...</p>
+            </div>
+         </div>
+         <div class="col-lg-4 col-sm-6">
+            <div class="feature-box">
+               <i class="mdi mdi-basket"></i>
+               <h6>100% Satisfaction Guarantee</h6>
+               <p>Rorem Ipsum Dolor sit amet, cons...</p>
+            </div>
+         </div>
+         <div class="col-lg-4 col-sm-6">
+            <div class="feature-box">
+               <i class="mdi mdi-tag-heart"></i>
+               <h6>Great Daily Deals Discount</h6>
+               <p>Sorem Ipsum Dolor sit amet, Cons...</p>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>

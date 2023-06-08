@@ -14,9 +14,6 @@
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Material Design Icons -->
   <link href="assets/vendor/icons/css/materialdesignicons.min.css" media="all" rel="stylesheet" type="text/css" />
-  <!-- Select2 CSS -->
-  <link href="assets/vendor/select2/css/select2-bootstrap.css" />
-  <link href="assets/vendor/select2/css/select2.min.css" rel="stylesheet" />
   <!-- Custom styles for this template -->
   <link href="styles.css" rel="stylesheet">
   <!-- Owl Carousel -->
@@ -31,98 +28,11 @@
   <!-- Bootstrap core JavaScript -->
   <script src="assets/vendor/jquery/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- select2 Js -->
-  <script src="assets/vendor/select2/js/select2.min.js"></script>
   <!-- Owl Carousel -->
   <script src="assets/vendor/owl-carousel/owl.carousel.js"></script>
   <!-- Custom -->
-  <script src="assets/js/custom.js"></script>
   <script src="assets/js/hc-offcanvas-nav.js?ver=4.1.1"></script>
   <link rel="stylesheet" href="assets/js/demo.css?ver=3.4.0">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <script>
-    (function ($) {
-      var $main_nav = $('#main-nav');
-      var $toggle = $('.toggle');
-
-      var defaultOptions = {
-        disableAt: false,
-        customToggle: $toggle,
-        levelSpacing: 40,
-        navTitle: 'All Categories',
-        levelTitles: true,
-        levelTitleAsBack: true,
-        pushContent: '#container',
-        insertClose: 2
-      };
-
-      // call our plugin
-      var Nav = $main_nav.hcOffcanvasNav(defaultOptions);
-
-      // add new items to original nav
-      $main_nav.find('li.add').children('a').on('click', function () {
-        var $this = $(this);
-        var $li = $this.parent();
-        var items = eval('(' + $this.attr('data-add') + ')');
-
-        $li.before('<li class="new"><a href="#">' + items[0] + '</a></li>');
-
-        items.shift();
-
-        if (!items.length) {
-          $li.remove();
-        }
-        else {
-          $this.attr('data-add', JSON.stringify(items));
-        }
-
-        Nav.update(true);
-      });
-
-      // demo settings update
-
-      const update = (settings) => {
-        if (Nav.isOpen()) {
-          Nav.on('close.once', function () {
-            Nav.update(settings);
-            Nav.open();
-          });
-
-          Nav.close();
-        }
-        else {
-          Nav.update(settings);
-        }
-      };
-
-      $('.actions').find('a').on('click', function (e) {
-        e.preventDefault();
-
-        var $this = $(this).addClass('active');
-        var $siblings = $this.parent().siblings().children('a').removeClass('active');
-        var settings = eval('(' + $this.data('demo') + ')');
-
-        update(settings);
-      });
-
-      $('.actions').find('input').on('change', function () {
-        var $this = $(this);
-        var settings = eval('(' + $this.data('demo') + ')');
-
-        if ($this.is(':checked')) {
-          update(settings);
-        }
-        else {
-          var removeData = {};
-          $.each(settings, function (index, value) {
-            removeData[index] = false;
-          });
-
-          update(removeData);
-        }
-      });
-    })(jQuery);
-  </script>
 </body>
 
 </html>

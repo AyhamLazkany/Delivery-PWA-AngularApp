@@ -1,12 +1,11 @@
 export class Restaurant {
+   _id!: string;
    img!: string;
    name!: string;
    type!: string;
-   categories!: string;
-   plugins!: string[];
-   phone!: string;
+   categories!: string[];
+   phone!: number[];
    location!: string;
-   description!: string;
-   createdAt!: string;
-   updatedAt!: string;
+   plugins!: string[];
+   openned!: boolean;
 }

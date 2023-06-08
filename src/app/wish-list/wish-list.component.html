@@ -6,21 +6,20 @@
                <div class="col-md-4">
                   <div class="card account-left">
                      <div class="user-profile-header">
-                        <img alt="logo" src="assets/img/user.jpg">
-                        <h5 class="mb-1 text-secondary"><strong>Hi </strong> OSAHAN</h5>
-                        <p> +91 8568079956</p>
+                        <h5 class="mb-1 text-secondary">Hi <strong>@{{ user.username }}</strong></h5>
+                        <p>{{user.phone}} 963+</p>
                      </div>
                      <div class="list-group">
                         <a routerLink="/profile" class="list-group-item list-group-item-action"><i aria-hidden="true"
-                              class="mdi mdi-account-outline"></i> My Profile</a>
+                              class="mdi mdi-account-outline"></i> صفحتي الشخصية</a>
                         <a routerLink="/myaddress" class="list-group-item list-group-item-action"><i aria-hidden="true"
-                              class="mdi mdi-map-marker-circle"></i> My Address</a>
-                        <a routerLink="/wishlist" class="list-group-item list-group-item-action active"><i aria-hidden="true"
-                              class="mdi mdi-heart-outline"></i> Wish List </a>
-                        <a routerLink="/orderlist" class="list-group-item list-group-item-action"><i
-                              aria-hidden="true" class="mdi mdi-format-list-bulleted"></i> Order List</a>
-                        <a routerLink="" class="list-group-item list-group-item-action"><i aria-hidden="true"
-                              class="mdi mdi-lock"></i> Logout</a>
+                              class="mdi mdi-map-marker-circle"></i> عناويني</a>
+                        <a routerLink="/wishlist" class="list-group-item list-group-item-action active"><i
+                              aria-hidden="true" class="mdi mdi-heart-outline"></i> المفضلة</a>
+                        <a routerLink="/orderlist" class="list-group-item list-group-item-action"><i aria-hidden="true"
+                              class="mdi mdi-format-list-bulleted"></i> قائمة الطلبات</a>
+                        <a (click)="logout()" routerLink="" class="list-group-item list-group-item-action"><i
+                              aria-hidden="true" class="mdi mdi-lock"></i> تسجيل الخروج</a>
                      </div>
                   </div>
                </div>

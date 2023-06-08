@@ -7,6 +7,4 @@ export class Dish {
    plugins!: string[];
    description!: string;
    rate!: number;
-   createdAt!: string;
-   updatedAt!: string;
 }

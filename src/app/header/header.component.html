@@ -20,44 +20,95 @@
                         <div class="tab-content">
                            <div class="tab-pane active" id="login" role="tabpanel">
                               <form novalidate #loginForm="ngForm" (ngSubmit)="onSubmit()">
-                                 <h5 class="heading-design-h5">Login to your account</h5>
+                                 <h5 class="heading-design-h5">تسجيل الدخول الى حسابك</h5>
                                  <fieldset class="form-group">
-                                    <label>Enter Username/Mobile number</label>
-                                    <input type="text" class="form-control" placeholder="EX: +963 977 277 277"
-                                       [(ngModel)]="user.username" name="username" required>
+                                    <label>ادخل اسم المستخدم</label>
+                                    <div class="input-group">
+                                       <input type="text" #username="ngModel" class="form-control"
+                                          placeholder="مثال : ahmad234" [(ngModel)]="user.username" name="username"
+                                          required>
+                                       <span class="input-group-text" id="basic-addon1">@</span>
+                                    </div>
                                  </fieldset>
+                                 <span *ngIf="username.invalid && (username.dirty || username.touched)">
+                                    <p *ngIf="username.errors?.['required']" class="text-danger">
+                                       اسم المستخدم مطلوب
+                                    </p>
+                                 </span>
                                  <fieldset class="form-group">
-                                    <label>Enter Password</label>
+                                    <label>ادخل كلمة المرور</label>
                                     <input type="password" class="form-control" placeholder="********"
-                                       [(ngModel)]="user.password" name="password" required>
+                                       [(ngModel)]="user.password" #password="ngModel" name="password" required>
                                  </fieldset>
+                                 <span *ngIf="password.invalid && (password.dirty || password.touched)">
+                                    <p *ngIf="password.errors?.['required']" class="text-danger">
+                                       كلمة المرور مطلوبة
+                                    </p>
+                                    <p *ngIf="password.errors?.['minlength']" class="text-danger">
+                                       يجب ان تحتوي كلمة على الاقل ثمانية خانات
+                                    </p>
+                                 </span>
+                                 <h6 *ngIf="SigninerrMess" class="text-center text-danger">{{ SigninerrMess }}</h6>
                                  <fieldset class="form-group">
-                                    <button type="submit" class="btn btn-lg btn-secondary btn-block">Enter to your
-                                       account</button>
+                                    <button [disabled]="loginForm.form.invalid" type="submit"
+                                       class="btn btn-lg btn-secondary btn-block">سجل الدخول</button>
                                  </fieldset>
                               </form>
                            </div>
                            <div class="tab-pane" id="register" role="tabpanel">
-                              <form novalidate #loginForm="ngForm" (ngSubmit)="onSignup()">
-                                 <h5 class="heading-design-h5">Register Now!</h5>
+                              <form novalidate #signupForm="ngForm" (ngSubmit)="onSignup()">
+                                 <h5 class="heading-design-h5">انشاء حساب</h5>
                                  <fieldset class="form-group">
-                                    <label>Enter Username </label>
-                                    <input type="text" class="form-control" placeholder="EX: ahmad153"
-                                       [(ngModel)]="createdUser.username" name="username" required>
+                                    <label>ادخل اسم المسخدم</label>
+                                    <div class="input-group">
+                                       <input type="text" class="form-control" placeholder="مثال : ahmad153"
+                                          [(ngModel)]="createdUser.username" #createdusername="ngModel" name="username"
+                                          required>
+                                       <span class="input-group-text" id="basic-addon1">@</span>
+                                    </div>
                                  </fieldset>
+                                 <span
+                                    *ngIf="createdusername.invalid && (createdusername.dirty || createdusername.touched)">
+                                    <p *ngIf="createdusername.errors?.['required']" class="text-danger">
+                                       اسم المستخدم مطلوب
+                                    </p>
+                                 </span>
                                  <fieldset class="form-group">
-                                    <label>Enter Mobile number</label>
-                                    <input type="text" class="form-control" placeholder="EX: +963 977 277 277"
-                                       [(ngModel)]="createdUser.phone" name="phone" required>
+                                    <label>ادخل رقم الهاتف</label>
+                                    <input type="text" pattern="[0-9]*" title="ادخل ارقام فقط" class="form-control"
+                                       placeholder="مثال : 0977277277" [(ngModel)]="createdUser.phone" name="phone"
+                                       #createdphone="ngModel" minlength="9" maxlength="10" required>
                                  </fieldset>
+                                 <span *ngIf="createdphone.invalid && (createdphone.dirty || createdphone.touched)">
+                                    <p *ngIf="createdphone.errors?.['required']" class="text-danger">
+                                       رقم الهاتف مطلوب
+                                    </p>
+                                    <p *ngIf="createdphone.errors?.['minlength']" class="text-danger">
+                                       يجب ان يحتوي على الاقل تسعة ارقم اذا بدء بال 9
+                                    </p>
+                                    <p *ngIf="createdphone.errors?.['pattern']" class="text-danger">
+                                       يجب ان يحتوي على أرقام فقط
+                                    </p>
+                                 </span>
                                  <fieldset class="form-group">
-                                    <label>Enter Password</label>
+                                    <label>ادخل كلمة المرور</label>
                                     <input type="password" class="form-control" placeholder="********"
-                                       [(ngModel)]="createdUser.password" name="password" required>
+                                       [(ngModel)]="createdUser.password" minlength="8" #createdpassword="ngModel"
+                                       name="password" required>
                                  </fieldset>
+                                 <span
+                                    *ngIf="createdpassword.invalid && (createdpassword.dirty || createdpassword.touched)">
+                                    <p *ngIf="createdpassword.errors?.['required']" class="text-danger">
+                                       كلمة المرور مطلوبة
+                                    </p>
+                                    <p *ngIf="createdpassword.errors?.['minlength']" class="text-danger">
+                                       يجب ان تحتوي كلمة على الاقل ثمانية خانات
+                                    </p>
+                                 </span>
+                                 <h6 *ngIf="SignupErrMess" class="text-center text-danger">{{ SignupErrMess }}</h6>
                                  <fieldset class="form-group">
-                                    <button type="submit" class="btn btn-lg btn-secondary btn-block">Create Your
-                                       Account</button>
+                                    <button [disabled]="signupForm.form.invalid" type="submit"
+                                       class="btn btn-lg btn-secondary btn-block">انشئ الحساب</button>
                                  </fieldset>
                               </form>
                            </div>
@@ -67,11 +118,11 @@
                            <ul class="nav nav-tabs" role="tablist">
                               <li class="nav-item">
                                  <a class="nav-link active" data-toggle="tab" href="#login" role="tab"><i
-                                       class="mdi mdi-lock"></i> LOGIN</a>
+                                       class="mdi mdi-lock"></i>تسجل الدخول</a>
                               </li>
                               <li class="nav-item">
                                  <a class="nav-link" data-toggle="tab" href="#register" role="tab"><i
-                                       class="mdi mdi-pencil"></i> REGISTER</a>
+                                       class="mdi mdi-pencil"></i>انشاء حساب</a>
                               </li>
                            </ul>
                         </div>
@@ -84,7 +135,7 @@
       </div>
    </div>
 </div>
-<div class="cart-sidebar">
+<div class="cart-sidebar" *ngIf="isLogged">
    <div class="cart-sidebar-header">
       <h5>
          My Cart <span class="text-success">(5 item)</span> <span data-toggle="offcanvas" class="float-right">
@@ -154,39 +205,35 @@
 <nav class="navbar navbar-light navbar-expand-lg bg-dark bg-faded osahan-menu">
    <div class="container-fluid">
       <a class="navbar-brand" routerLink="/home"> <img src="assets/img/logo.png" alt="logo"> </a>
-      <a class="location-top" href="#"><i class="mdi mdi-map-marker-circle" aria-hidden="true"></i> New York</a>
+      <a class="location-top" href="#"><i class="mdi mdi-map-marker-circle" aria-hidden="true"></i></a>
       <div class="navbar-collapse" id="navbarNavDropdown">
-         <div class="navbar-nav mr-auto mt-2 mt-lg-0 margin-auto top-categories-search-main">
+         <div [ngClass]="showSearch == true ? 'd-showen' : 'd-hiden'" id="searchbar"
+            class="navbar-nav mr-auto mt-2 mt-lg-0 margin-auto top-categories-search-main">
             <div class="top-categories-search">
                <div class="input-group">
-                  <span class="input-group-btn categories-dropdown">
-                     <select class="form-control-select">
-                        <option selected="selected">Your City</option>
-                        <option value="0">New Delhi</option>
-                        <option value="2">Bengaluru</option>
-                        <option value="3">Hyderabad</option>
-                        <option value="4">Kolkata</option>
-                     </select>
-                  </span>
-                  <input class="form-control" placeholder="Search products in Your City"
+                  <input class="form-control" placeholder="ابحث عن وجبتك أو مطعمك هنا"
                      aria-label="Search products in Your City" type="text">
                   <span class="input-group-btn">
-                     <button class="btn btn-secondary" type="button"><i class="mdi mdi-file-find"></i>
-                        Search</button>
+                     <button class="btn btn-secondary" type="button"><i class="mdi mdi-magnify"></i></button>
                   </span>
                </div>
             </div>
          </div>
          <div class="my-2 my-lg-0">
             <ul class="list-inline main-nav-right">
+               <li class="list-inline-item">
+                  <button (click)="clickSearchbtn()" class="btn btn-link d-lg-none"><i class="mdi mdi-magnify"></i>
+                  </button>
+               </li>
                <li class="list-inline-item" *ngIf="!isLogged">
-                  <a href="#" data-target="#bd-example-modal" data-toggle="modal" class="btn btn-link"><i
-                        class="mdi mdi-account-circle"></i> Login/Sign Up</a>
+                  <button #btnProfile data-target="#bd-example-modal" data-toggle="modal" class="btn btn-link"><i
+                        class="mdi mdi-account-circle"></i> سجل الدخول/انشاء حساب</button>
                </li>
                <li class="list-inline-item" *ngIf="isLogged">
-                  <a routerLink="/profile" class="btn btn-link"><i class="mdi mdi-account-circle"></i> {{username}}</a>
+                  <a routerLink="/profile" class="btn btn-link"><i class="mdi mdi-account-circle"></i> {{ myusername
+                     }}@</a>
                </li>
-               <li class="list-inline-item cart-btn">
+               <li class="list-inline-item cart-btn" *ngIf="isLogged">
                   <span data-toggle="offcanvas" class="btn btn-link border-none"><i class="mdi mdi-cart"></i>
                      My Cart <small class="cart-value">5</small></span>
                </li>

@@ -13,8 +13,9 @@ interface AuthResponse {
 }
 
 interface credentials {
-  authToken: string | any;
-  username: string | any;
+  authToken: string;
+  username: string;
+  admin: boolean;
 }
 
 interface JWTResponse {
@@ -38,7 +39,7 @@ export class AuthService {
   isAuthenticated: boolean = false;
   authToken: string | any = undefined;
   username: string | any = undefined;
-  admin: boolean = false;
+  admin: boolean | any = false;
 
   constructor(private http: HttpClient,
     private ProcessHttpMsgService: ProcessHttpMsgService) {
@@ -56,10 +57,12 @@ export class AuthService {
     this.isAuthenticated = true;
     this.username = credentials.username;
     this.authToken = credentials.authToken;
+    this.admin = credentials.admin;
   }
 
   destroyUserCredentials() {
     this.isAuthenticated = false;
+    this.admin = undefined;
     this.authToken = undefined;
     this.username = undefined;
     localStorage.removeItem(this.TokenKey);
@@ -99,7 +102,7 @@ export class AuthService {
       .pipe(map((res) => {
         if (res.success == true)
           return { success: res.success, status: res.status, user: res.user };
-        else 
+        else
           return { success: res.success, status: res.status };
       }), catchError(error => this.ProcessHttpMsgService.handleError(error)));
   }
@@ -108,7 +111,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(baseURL + 'users/login',
       { 'username': user.username, 'password': user.password })
       .pipe(map(res => {
-        this.storeUserCredentials({ username: res.user.username, authToken: res.token });
+        this.storeUserCredentials({ username: res.user.username, admin: res.user.admin, authToken: res.token });
         this.Credentials = localStorage.getItem(this.TokenKey);
         return { success: res.success, status: res.status, user: res.user };
       }), catchError(error => this.ProcessHttpMsgService.handleError(error)));
@@ -122,13 +125,26 @@ export class AuthService {
     return this.isAuthenticated;
   }
 
+  isAdmin(): boolean {
+    return this.admin;
+  }
+
   getUser(username: string): Observable<any> {
     return this.http.get<any>(baseURL + 'users/' + username)
       .pipe(catchError(this.ProcessHttpMsgService.handleError));
   }
-  putUser(_id: string, user: any): Observable<any> {
-    return this.http.put<any>(baseURL + 'users/editUser/' + _id, user)
-      .pipe(catchError(this.ProcessHttpMsgService.handleError));
+  putUser(user: any): Observable<any> {
+    return this.http.put<any>(baseURL + 'users/editUser/', user)
+      .pipe(map((res) => {
+        if (user.username) {
+          let authtoken = this.authToken;
+          this.destroyUserCredentials();
+          this.storeUserCredentials({ username: res.user.username, admin: res.user.admin, authToken: authtoken });
+          return { status: res.status, user: res.user };
+        } else {
+          return { status: res.status, user: res.user };
+        }
+      }), catchError(this.ProcessHttpMsgService.handleError));
   }
   deleteUser(_id: string): Observable<any> {
     return this.http.delete<any>(baseURL + 'users/deleteUser/' + _id)
@@ -141,13 +157,7 @@ export class AuthService {
         return { success: res.success, status: 'This username used by anthor user' };
       }));
   }
-  emailChange(email: string): Observable<CanResponse> {
-    return this.http.get<CanResponse>(baseURL + `users?email=${email}`)
-      .pipe(map((res) => {
-        return { success: res.success, status: 'This email used by anthor user' };
-      }));
-  }
-  phoneChange(phone: string): Observable<CanResponse> {
+  phoneChange(phone: number): Observable<CanResponse> {
     return this.http.get<CanResponse>(baseURL + `users?phone=${phone}`)
       .pipe(map((res) => {
         return { success: res.success, status: 'This phone number used by anthor user' };

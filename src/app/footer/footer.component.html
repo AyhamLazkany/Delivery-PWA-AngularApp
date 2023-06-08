@@ -11,10 +11,13 @@
          <a class="toggle"><i class="mdi mdi-menu"></i></a>
       </div>
       <div class="col">
-         <a routerLink=""><i class="mdi mdi-tag"></i></a>
+         <a routerLink="/myaddress"><i class="mdi mdi-tag"></i></a>
       </div>
-      <div class="col">
+      <div class="col" *ngIf="isLogged">
          <a routerLink="/profile"><i class="mdi mdi-account-circle"></i></a>
+      </div>
+      <div class="col" *ngIf="!isLogged">
+         <a routerLink="/profile" (click)="OpenDialog()"><i class="mdi mdi-account-circle"></i></a>
       </div>
    </div>
 </div>

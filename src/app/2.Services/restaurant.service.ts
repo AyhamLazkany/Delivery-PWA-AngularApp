@@ -22,15 +22,15 @@ export class RestaurantService {
   }
 
 
-  getStore(id: string): Observable<Restaurant> {
+  gettRestaurant(id: string): Observable<Restaurant> {
     return this.http.get<Restaurant>(baseURL + 'restaurants/' + id)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
-  putStore(id: string, restaurant: any): Observable<Restaurant> {
+  putRestaurant(id: string, restaurant: any): Observable<Restaurant> {
     return this.http.put<Restaurant>(baseURL + 'restaurants/' + id, restaurant)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
-  deleteStore(id: string): Observable<Restaurant> {
+  deletetRestaurant(id: string): Observable<Restaurant> {
     return this.http.delete<Restaurant>(baseURL + 'restaurants/' + id)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
