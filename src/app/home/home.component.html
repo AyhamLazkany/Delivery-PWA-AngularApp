@@ -1,7 +1,7 @@
 <section class="carousel-slider-main text-center mt-3 mb-0">
    <div class="owl-carousel owl-carousel-slider mb-0">
       <div class="item" *ngIf="admin">
-         <a><img class="img-fluid" src="{{baseURL}}assets/img/green-plus.jpg">
+         <a><img class="img-fluid" src="{{baseURL}}assets/img/plus.png">
             <input type="file" accept="image/*" (change)="addSliderImg($event)" title="اضافة صورة للمطعم"></a>
       </div>
       <div class="item" *ngFor="let img of sliderImages">
@@ -16,20 +16,21 @@
       <div class="owl-carousel owl-carousel-category">
          <div class="item" *ngIf="admin">
             <div class="category-item">
-               <a routerLink="/restaurants">
+               <a routerLink="/creatcateg">
                   <img class="img-fluid" src="{{baseURL}}assets/img/green-plus.jpg">
                   <h6>عنصر جديد</h6>
                </a>
             </div>
          </div>
-         <div class="item">
+         <div class="item" *ngFor="let categ of categories">
             <div class="category-item">
                <a routerLink="/restaurants">
-                  <img class="img-fluid" src="assets/img/small/1.jpg" alt="">
-                  <h6>سندويش غربي</h6>
-                  <p>150 عنصر</p>
+                  <img class="img-fluid" src="{{baseURL + categ.img}}">
+                  <h6>{{categ.name}}</h6>
                </a>
             </div>
+            <button *ngIf="admin" class="btn btn-danger btn-sm" (click)="deleteCategroy(categ._id)"
+               style="position: absolute;top: 0px;right: 45px;z-index: 1000;"><i class="mdi mdi-delete"></i></button>
          </div>
       </div>
    </div>
@@ -43,13 +44,8 @@
       </div>
       <div class="owl-carousel owl-carousel-featured">
          <div class="item" *ngFor="let res of restaurants">
-            <h5 *ngIf="admin">
-               <span *ngIf="res.openned" (click)="close(res._id)"
-                  class="badge badge-pill badge-success p-2">مفتوح</span>
-               <span *ngIf="!res.openned" (click)="open(res._id)" class="badge badge-pill badge-danger p-2">مغلق</span>
-            </h5>
             <div class="product">
-               <a routerLink="/">
+               <a routerLink="/restaurantDetails/{{res._id}}">
                   <div class="product-header">
                      <img class="img-fluid" src="{{baseURL + res.img}}">
                   </div>

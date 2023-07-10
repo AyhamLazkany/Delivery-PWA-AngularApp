@@ -13,8 +13,8 @@ export class DishService {
 
   constructor(private http: HttpClient, private ProcHttpMsgServ: ProcessHttpMsgService) { }
 
-  getDishes(storeId: string): Observable<Dish[]> {
-    return this.http.get<Dish[]>(baseURL + `dishes?storeId=${storeId}`)
+  getDishes(resId: string): Observable<Dish[]> {
+    return this.http.get<Dish[]>(baseURL + `dishes?resId=${resId}`)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
   postDishes(dish: any): Observable<Dish> {

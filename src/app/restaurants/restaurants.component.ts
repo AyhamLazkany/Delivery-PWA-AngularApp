@@ -3,6 +3,7 @@ import { RestaurantService } from '../2.Services/restaurant.service';
 import { ChangeValueService } from '../2.Services/change-value.service';
 import { Restaurant } from '../1.Shared/restaurant';
 import { Subscription } from 'rxjs';
+import { owlJqueryNav } from '../1.Shared/owl-carousel-jquery';
 declare var $:any;
 
 @Component({
@@ -24,39 +25,7 @@ export class RestaurantsComponent {
     this.subscription = this.CVSrv.currentIsAdmin.subscribe((admin) => this.admin = admin);
     this.resSrv.getRestaurants().subscribe((res) => {
       this.restaurants = res;
-      $(document).ready(() => {
-         "use strict";
-         // ===========Featured Owl Carousel============
-         var objowlcarousel = $(".radio-input");
-         if (objowlcarousel.length > 0) {
-            objowlcarousel.owlCarousel({
-               responsive: {
-                  0: {
-                     items: 4,
-                  },
-                  600: {
-                     items: 4,
-                  },
-                  1000: {
-                     items: 5,
-                  },
-                  1200: {
-                     items: 5,
-                  },
-               },
-               lazyLoad: true,
-               pagination: false,
-               loop: false,
-               dots: false,
-               autoPlay: false,
-               navigation: true,
-               stopOnHover: true,
-               rtl: true,
-               nav: false,
-               navigationText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"]
-            });
-         }
-      })
+      owlJqueryNav();
     })
   }
 

@@ -1,4 +1,5 @@
 export class Dish {
+   _id!: string;
    img!: string;
    name!: string;
    resname!: string;
@@ -6,5 +7,4 @@ export class Dish {
    category!: string;
    plugins!: string[];
    description!: string;
-   rate!: number;
 }

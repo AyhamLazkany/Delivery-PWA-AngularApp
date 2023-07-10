@@ -173,3 +173,39 @@ export var owlJquery = () => {
 
    });
 }
+
+export var owlJqueryNav = () => {
+   $(document).ready(() => {
+      "use strict";
+      // ===========Featured Owl Carousel============
+      var objowlcarousel = $(".radio-input");
+      if (objowlcarousel.length > 0) {
+         objowlcarousel.owlCarousel({
+            responsive: {
+               0: {
+                  items: 4,
+               },
+               600: {
+                  items: 4,
+               },
+               1000: {
+                  items: 5,
+               },
+               1200: {
+                  items: 5,
+               },
+            },
+            lazyLoad: true,
+            pagination: false,
+            loop: false,
+            dots: false,
+            autoPlay: false,
+            navigation: true,
+            stopOnHover: true,
+            rtl: true,
+            nav: false,
+            navigationText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"]
+         });
+      }
+   })
+}

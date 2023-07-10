@@ -3,10 +3,8 @@
       <div class="row">
 
          <div class="col-12">
-            <a href="#"><img class="img-fluid mb-3" src="assets/img/shop.jpg" alt=""></a>
             <div class="shop-head">
                <h5 class="mb-3">جميع المطاعم</h5>
-
             </div>
             <div class="owl-carousel radio-input col-12 col-md-6">
                <label class="item">
@@ -57,7 +55,7 @@
                         class="badge badge-pill badge-danger p-2">مغلق</span>
                   </h5>
                   <div class="product">
-                     <a routerLink="/">
+                     <a routerLink="/restaurantDetails/{{res._id}}">
                         <div class="product-header">
                            <img class="img-fluid" src="{{baseURL + res.img}}">
                            <span *ngIf="res.openned" class="veg text-success mdi mdi-circle"></span>

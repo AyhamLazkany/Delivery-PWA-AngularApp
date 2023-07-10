@@ -3,6 +3,7 @@ import { Restaurant } from '../1.Shared/restaurant';
 import { Dish } from '../1.Shared/dish';
 import { owlJquery } from '../1.Shared/owl-carousel-jquery';
 import { RestaurantService } from '../2.Services/restaurant.service';
+import { CategoryService } from '../2.Services/category.service';
 import { ChangeValueService } from '../2.Services/change-value.service';
 import { ImgUploadService } from '../2.Services/img-upload.service';
 import { Subscription } from 'rxjs';
@@ -20,12 +21,14 @@ export class HomeComponent implements OnInit {
   sliderImages!: string[];
   featuredDishes!: Dish[];
   restaurants!: Restaurant[];
-  categories!: string[];
+  categories!: any[];
+  categErrMssg!: string;
   admin: boolean | undefined;
   subscription!: Subscription;
 
   constructor(@Inject('BaseURL') public baseURL: any,
     private resSrv: RestaurantService,
+    private catSrv: CategoryService,
     private CVSrv: ChangeValueService,
     private imgSrv: ImgUploadService,
     public fb: FormBuilder) {
@@ -37,12 +40,13 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.CVSrv.currentIsAdmin.subscribe((admin) => this.admin = admin);
     this.imgSrv.getImages().subscribe((imgs) => {
-      this.sliderImages = imgs
+      this.sliderImages = imgs;
+      this.resSrv.getRestaurants().subscribe((res) => {
+        this.restaurants = res;
+        owlJquery();
+      })
     });
-    this.resSrv.getRestaurants().subscribe((res) => {
-      this.restaurants = res;
-      owlJquery();
-    })
+    this.catSrv.getCategories().subscribe((categories) => this.categories = categories, err => this.categErrMssg = err)
   }
 
   addSliderImg(event: any) {
@@ -73,19 +77,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  close(id: string) {
-    this.resSrv.putRestaurant(id, { openned: false }).subscribe((res) => {
-      const index = this.restaurants.findIndex((rest) => rest._id == id);
-      this.restaurants[index].openned = res.openned;
+  deleteCategroy(id: string) {
+    this.catSrv.deleteCategory(id).subscribe(() => {
+      this.categories.splice(this.categories.findIndex((cat) => cat._id == id), 1);
     });
   }
-  open(id: string) {
-    this.resSrv.putRestaurant(id, { openned: true }).subscribe((res) => {
-      const index = this.restaurants.findIndex((rest) => rest._id == id);
-      this.restaurants[index].openned = res.openned;
-    });
-  }
-
-
-
 }
