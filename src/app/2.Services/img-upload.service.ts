@@ -26,8 +26,8 @@ export class ImgUploadService {
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
 
-  deleteImg(img: string): Observable<any> {
-    return this.http.delete(baseURL + 'images/slider/' + img)
+  deleteImg(img: string, folder: string): Observable<any> {
+    return this.http.delete(baseURL + 'images/' + folder + '/' + img)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
 

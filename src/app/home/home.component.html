@@ -1,7 +1,7 @@
 <section class="carousel-slider-main text-center mt-3 mb-0">
    <div class="owl-carousel owl-carousel-slider mb-0">
       <div class="item" *ngIf="admin">
-         <a><img class="img-fluid" src="{{baseURL}}assets/img/green-plus.jpg">
+         <a><img class="img-fluid" src="{{baseURL}}assets/img/plus.png">
             <input type="file" accept="image/*" (change)="addSliderImg($event)" title="اضافة صورة للمطعم"></a>
       </div>
       <div class="item" *ngFor="let img of sliderImages">
@@ -16,20 +16,21 @@
       <div class="owl-carousel owl-carousel-category">
          <div class="item" *ngIf="admin">
             <div class="category-item">
-               <a routerLink="/restaurants">
+               <a routerLink="/creatcateg">
                   <img class="img-fluid" src="{{baseURL}}assets/img/green-plus.jpg">
                   <h6>عنصر جديد</h6>
                </a>
             </div>
          </div>
-         <div class="item">
+         <div class="item" *ngFor="let categ of categories">
             <div class="category-item">
                <a routerLink="/restaurants">
-                  <img class="img-fluid" src="assets/img/small/1.jpg" alt="">
-                  <h6>سندويش غربي</h6>
-                  <p>150 عنصر</p>
+                  <img class="img-fluid" src="{{baseURL + categ.img}}">
+                  <h6>{{categ.name}}</h6>
                </a>
             </div>
+            <button *ngIf="admin" class="btn btn-danger btn-sm" (click)="deleteCategroy(categ)"
+               style="position: absolute;top: 0px;right: 45px;z-index: 1000;"><i class="mdi mdi-delete"></i></button>
          </div>
       </div>
    </div>
@@ -43,15 +44,12 @@
       </div>
       <div class="owl-carousel owl-carousel-featured">
          <div class="item" *ngFor="let res of restaurants">
-            <h5 *ngIf="admin">
-               <span *ngIf="res.openned" (click)="close(res._id)"
-                  class="badge badge-pill badge-success p-2">مفتوح</span>
-               <span *ngIf="!res.openned" (click)="open(res._id)" class="badge badge-pill badge-danger p-2">مغلق</span>
-            </h5>
             <div class="product">
-               <a routerLink="/">
+               <a routerLink="/restaurantDetails/{{res._id}}">
                   <div class="product-header">
                      <img class="img-fluid" src="{{baseURL + res.img}}">
+                     <span *ngIf="res.openned" class="veg text-success mdi mdi-circle"></span>
+                     <span *ngIf="!res.openned" class="veg text-danger mdi mdi-circle"></span>
                   </div>
                   <div class="product-body">
                      <h5>{{res.name}}</h5>
@@ -63,49 +61,29 @@
       </div>
    </div>
 </section>
-<section class="product-items-slider section-padding">
+<section class="product-items-slider">
    <div class="container">
       <div class="section-header">
          <h5 class="heading-design-h5">المنتجات الاكثر شراء
             <a class="float-right text-secondary" href="shop.html">عرض الكل</a>
          </h5>
       </div>
-      <div class="owl-carousel owl-carousel-featured">
-         <div class="item">
-            <div class="product">
-               <a href="single.html">
-                  <div class="product-header">
-                     <img class="img-fluid" src="assets/img/item/8.jpg" alt="">
-                  </div>
-                  <div class="product-body">
-                     <h5>اسم المنتج</h5>
-                     <h6><strong><span class="mdi mdi-approval"></span>من مطعم : </strong>اسم المطعم</h6>
-                  </div>
-                  <div class="product-footer">
-                     <button type="button" class="btn btn-secondary btn-sm float-right"><i
-                           class="mdi mdi-cart-outline"></i>إضافة إلى السلة</button><br>
-                     <p class="offer-price mb-0">السعر <b>ل.س<i class="mdi mdi-tag-outline"></i></b></p>
-                  </div>
-               </a>
-            </div>
-         </div>
-         <div class="item">
-            <div class="product">
-               <a href="single.html">
-                  <div class="product-header">
-                     <img class="img-fluid" src="assets/img/item/8.jpg" alt="">
-                  </div>
-                  <div class="product-body">
-                     <h5>اسم المنتج</h5>
-                     <h6><strong><span class="mdi mdi-approval"></span>من مطعم : </strong>اسم المطعم</h6>
-                  </div>
-                  <div class="product-footer">
-                     <button type="button" class="btn btn-secondary btn-sm float-right"><i
-                           class="mdi mdi-cart-outline"></i>إضافة إلى السلة</button><br>
-                     <p class="offer-price mb-0">السعر <b>ل.س<i class="mdi mdi-tag-outline"></i></b></p>
-                  </div>
-               </a>
-            </div>
+      <div class="owl-carousel owl-carousel-featuredDish">
+         <div style="margin-top: 75px;" class="item p-2 pl-3 p-md-4" *ngFor="let dish of featuredDishes">
+            <a class="dish-card" data-target="#dish-card" data-toggle="modal" (click)="selectDish(dish)">
+               <img class="dish-card__image" src="{{baseURL + dish.img}}" />
+               <div class="dish-card__data">
+                  <h2 class="dish-card__info">
+                     {{dish.name}}
+                  </h2>
+                  <h3 class="dish-card__price">{{dish.price}} ل.س</h3>
+                  <button class="dish-card__add">+</button>
+                  <!-- <span *ngIf="admin" class="btn btn-danger" (click)="deleteDish(dish._id)"
+                  style="position: absolute; right: 50px;">
+                  <h5><i class="mdi mdi-delete"></i></h5>
+                  </span> -->
+               </div>
+            </a>
          </div>
       </div>
    </div>
@@ -137,3 +115,4 @@
       </div>
    </div>
 </section>
+<app-dish-details-card #dishDetail [dish]="dish" class="modal fade dishcardmodal" id="dish-card"></app-dish-details-card>

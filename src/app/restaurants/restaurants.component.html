@@ -3,30 +3,28 @@
       <div class="row">
 
          <div class="col-12">
-            <a href="#"><img class="img-fluid mb-3" src="assets/img/shop.jpg" alt=""></a>
             <div class="shop-head">
                <h5 class="mb-3">جميع المطاعم</h5>
-
             </div>
             <div class="owl-carousel radio-input col-12 col-md-6">
                <label class="item">
-                  <input type="radio" id="value-1" name="value-radio" value="value-1" checked>
+                  <input type="radio" id="value-1" name="value-radio" value="value-1" (click)="onSelectType('الجميع')" checked>
                   <span>الجميع</span>
                </label>
                <label class="item">
-                  <input type="radio" id="value-2" name="value-radio" value="value-2">
+                  <input type="radio" id="value-2" name="value-radio" value="وجبات سريعة" (click)="onSelectType('وجبات سريعة')">
                   <span>وجبات سريعة</span>
                </label>
                <label class="item">
-                  <input type="radio" id="value-3" name="value-radio" value="value-3">
+                  <input type="radio" id="value-3" name="value-radio" value="معجنات" (click)="onSelectType('معجنات')">
                   <span>معجنات</span>
                </label>
                <label class="item">
-                  <input type="radio" id="value-4" name="value-radio" value="value-4">
+                  <input type="radio" id="value-4" name="value-radio" value="كوكيلات" (click)="onSelectType('كوكيلات')">
                   <span>كوكيلات</span>
                </label>
                <label class="item">
-                  <input type="radio" id="value-5" name="value-radio" value="value-5">
+                  <input type="radio" id="value-5" name="value-radio" value="مطعم عائلي" (click)="onSelectType('مطعم عائلي')">
                   <span>مطعم عائلي</span>
                </label>
                <span class="selection"></span>
@@ -51,13 +49,11 @@
                </div>
                <div class="col-6 col-md-4" *ngFor="let res of restaurants">
                   <h5 *ngIf="admin">
-                     <span *ngIf="res.openned" (click)="close(res._id)"
-                        class="badge badge-pill badge-success p-2">مفتوح</span>
-                     <span *ngIf="!res.openned" (click)="open(res._id)"
-                        class="badge badge-pill badge-danger p-2">مغلق</span>
+                     <span *ngIf="res.openned" class="badge badge-pill badge-success p-2">مفتوح</span>
+                     <span *ngIf="!res.openned" class="badge badge-pill badge-danger p-2">مغلق</span>
                   </h5>
                   <div class="product">
-                     <a routerLink="/">
+                     <a routerLink="/restaurantDetails/{{res._id}}">
                         <div class="product-header">
                            <img class="img-fluid" src="{{baseURL + res.img}}">
                            <span *ngIf="res.openned" class="veg text-success mdi mdi-circle"></span>

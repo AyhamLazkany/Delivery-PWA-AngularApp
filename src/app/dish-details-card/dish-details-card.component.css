@@ -1,0 +1,205 @@
+.modal-dish-card {
+   border-bottom-left-radius: 30px;
+   border-bottom-right-radius: 30px;
+   margin-top: 25vh;
+   height: fit-content;
+   width: 88vw !important;
+   max-width: 380px;
+   min-height: 500px;
+}
+
+.modal-dish-card__image {
+   border-radius: 50%;
+   position: absolute;
+   min-width: 110%;
+   aspect-ratio: 1 / 1;
+   top: -35%;
+   z-index: 2;
+   -webkit-filter: drop-shadow(5px 5px 5px #222);
+   filter: drop-shadow(0 5px 10px rgb(0, 0, 0));
+}
+
+.modal-dish-card__data {
+   width: 100%;
+   min-height: 500px;
+   border-bottom-left-radius: 30px;
+   border-bottom-right-radius: 30px;
+   background-color: #fefbf0;
+   padding-top: 60%;
+}
+
+h1.modal-dish-card__info {
+   margin: 0;
+   padding: 3px 6px;
+   font-size: 21px;
+   font-weight: 600;
+}
+
+h1.modal-dish-card__info p {
+   display: inline;
+   color: var(--secondary);
+   font-size: inherit;
+   font-weight: 600;
+   text-shadow:
+      -0.5px 0px 0px black,
+      0.5px 0px 0px black,
+      0px -0.5px 0px black,
+      0px 0.5px 0px black;
+}
+
+h2.modal-dish-card__info {
+   margin: 0;
+   padding: 3px 6px;
+   font-size: 18px;
+   font-weight: 600;
+}
+
+p.modal-dish-card__info {
+   margin: 0;
+   min-height: 30px;
+   line-height: 17px;
+   padding: 3px 12px;
+   font-size: 14px;
+   font-weight: 500;
+   color: #646464;
+}
+
+.modal-dish-card__info label {
+   margin: 0;
+   font-size: 14px;
+   font-weight: 500;
+   color: #646464;
+}
+
+.modal-dish-card__price {
+   right: 0;
+   bottom: 0;
+   position: absolute;
+   height: 30px;
+   padding: 0 10px;
+   font-size: 17px;
+   display: flex;
+   align-items: center;
+}
+
+.modal-dish-card__price p {
+   font-size: 30px;
+   color: var(--secondary);
+   text-shadow:
+      -0.5px 0px 0px black,
+      0.5px 0px 0px black,
+      0px -0.5px 0px black,
+      0px 0.5px 0px black;
+}
+
+.modal-dish-card__add {
+   overflow: hidden;
+   width: 150px;
+   height: 30px;
+   left: 0;
+   bottom: 0;
+   position: absolute;
+   background-color: #222222;
+   border: none;
+   color: var(--secondary);
+   border-bottom-left-radius: 30px;
+   border-top-right-radius: 30px;
+   font-size: 16px;
+   cursor: pointer;
+   outline: none;
+   transition: 200ms;
+}
+
+.modal-dish-card__add:active {
+   opacity: 1;
+   transition: 200ms;
+   transform: scale(0.95);
+}
+
+.modal-dish-card__edit {
+   overflow: hidden;
+   width: 50%;
+   height: 40px;
+   left: 0;
+   top: 0;
+   border-top-left-radius: 20px;
+   border-bottom-left-radius: 20px;
+   font-size: 25px;
+   ;
+   cursor: pointer;
+   outline: none;
+   border: none;
+   z-index: 3;
+}
+
+.modal-dish-card__delete {
+   overflow: hidden;
+   width: 50%;
+   height: 40px;
+   right: 0;
+   top: 0;
+   border-top-right-radius: 20px;
+   border-bottom-right-radius: 20px;
+   font-size: 25px;
+   ;
+   cursor: pointer;
+   outline: none;
+   border: none;
+   z-index: 3;
+}
+
+.food-card_order-count {
+   width: fit-content;
+   position: absolute;
+   left: 30px;
+   bottom: 35px;
+}
+.food-card_order-count .input-group {
+   max-width: fit-content;
+}
+
+.food-card_order-count .form-control {
+   max-width: 30px;
+}
+.food-card_order-count input {
+   padding: 0px;
+   background: #f5f5f5;
+   border-color: #f5f5f5;
+   text-align: center;
+}
+
+.food-card_order-count button {
+   font-size: 20px;
+   padding: 0px;
+}
+.btn-outline-secondary:focus {
+   background-color: transparent !important;
+   border: transparent !important;
+}
+.dish-radio-input input[type="radio"] {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+ 
+   border-radius: 50%;
+   width: 16px;
+   height: 16px;
+ 
+   border: 2px solid #999;
+   transition: 0.2s all linear;
+}
+.dish-radio-input input[type="radio"]:checked {
+   border: 6px solid var(--secondary);
+   outline: unset !important /* I added this one for Edge (chromium) support */
+}
+.check-input input[type="checkbox"] {
+   scale: 1.3;
+   accent-color: var(--secondary);
+}
+@media (max-width: 991.98px) {
+   .modal-dish-card {
+      width: 75vw;
+      border-bottom-right-radius: 0px;
+      margin-right: 0;
+   }
+}

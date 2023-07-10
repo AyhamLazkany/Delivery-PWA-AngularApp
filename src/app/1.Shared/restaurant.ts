@@ -7,5 +7,7 @@ export class Restaurant {
    phone!: number[];
    location!: string;
    plugins!: string[];
-   openned!: boolean;
+   openned!: boolean; 
+   closetime!: string;
+   opentime!: string;
 }

@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { AuthService } from '../2.Services/auth.service';
 import { ChangeValueService } from '../2.Services/change-value.service';
 import { Subscription } from 'rxjs';
+import { Location } from "@angular/common";
+import { Router, NavigationEnd } from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -22,10 +24,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
   createdUser = { username: '', password: '', phone: '' };
   SigninerrMess!: string;
   SignupErrMess!: string;
+  private history: string[] = [];
 
   constructor(private authService: AuthService,
     private CVSrv: ChangeValueService,
-    @Inject('BaseURL') public baseURL: any) { };
+    private router: Router,
+    private location: Location,
+    @Inject('BaseURL') public baseURL: any) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.history.push(event.urlAfterRedirects);
+      };
+    });
+  }
+
+  back() {
+    this.history.pop();
+    if (this.history.length > 0) {
+      this.location.back();
+    } else {
+      this.router.navigateByUrl("/");
+    }
+  }
 
   ngOnInit() {
     this.authService.loadUserCredentials();

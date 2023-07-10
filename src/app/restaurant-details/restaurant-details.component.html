@@ -1,1 +1,75 @@
-<p>restaurant-details works!</p>
+<section>
+   <div class="breadcrumbs d-flex align-items-center" style="background-image: url('{{baseURL + restaurant.img}}');">
+      <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+         <span *ngIf="admin" class="btn btn-danger" (click)="deleteRes(restaurant._id)"
+            style="position: absolute; right: 10px; top: -50px">
+            <h5><i class="mdi mdi-delete"></i></h5>
+         </span>
+         <span *ngIf="admin" class="btn btn-success" routerLink="/editres/{{restaurant._id}}"
+            style="position: absolute; left: 10px; top: -50px">
+            <h5><i class="mdi mdi-pencil"></i></h5>
+         </span>
+         <ol>
+            <li><a routerLink="/">الرئيسية </a></li>
+            <li><a routerLink="/restaurants"> جميع المطاعم</a></li>
+            <li> {{restaurant.name}}</li>
+         </ol>
+         <br>
+         <h4 class="text-secondary">{{restaurant.name}}</h4>
+         <br>
+         <h5>
+            <ul class="text-center">
+               <li class="d-inline"><span class="badge badge-pill bg-dark text-secondary p-2">
+                     <i class="mdi mdi-approval"></i>&nbsp;{{restaurant.type}}</span></li>
+               <li class="d-inline"><span class="px-2 mx-2 px-sm-5 mx-sm-5"></span></li>
+               <li class="d-inline"><span class="badge badge-pill bg-dark text-secondary p-2">
+                     <i class="mdi mdi-tag"></i>&nbsp;{{restaurant.location}}</span></li>
+            </ul>
+            <ul class="mt-4 text-center">
+               <li class="d-inline"><span class="badge badge-pill bg-dark text-secondary p-2">
+                     <i class="mdi mdi-phone"></i>0{{restaurant.phone[0]}}&nbsp;|&nbsp;0{{restaurant.phone[1]}}</span>
+               </li>
+            </ul>
+         </h5>
+         <br>
+         <p class="text-white" data-aos="fade-up"></p>
+      </div>
+   </div><br>
+   <div class="owl-carousel radio-input col-12 col-md-6">
+      <label class="item">
+         <input type="radio" id="value-1" name="value-radio" value="الجميع" (click)="onSelectCategory('الجميع')"
+            checked>
+         <span>الجميع</span>
+      </label>
+      <label class="item" *ngFor="let categ of restaurant.categories;let i = index">
+         <input type="radio" id="value-{{i}}" name="value-radio" value="{{categ}}" (click)="onSelectCategory(categ)">
+         <span>{{categ}}</span>
+      </label>
+   </div><br>
+   <div class="row no-gutters">
+      <div class="col-4 col-sm-3 col-md-2 mx-auto" *ngIf="admin">
+         <article class="dish-card" routerLink="/creatdish/{{restaurant._id}}">
+            <img class="dish-card__image" src="{{baseURL}}assets/img/green-plus.jpg"/>
+            <div class="dish-card__data">
+               <h2 class="dish-card__info">
+               </h2>
+               <h3 class="dish-card__price"></h3>
+               <button class="dish-card__add">+</button>
+            </div>
+         </article>
+      </div>
+      <div class="col-4 col-sm-3 col-md-2 mx-auto"  *ngFor="let dish of dishes" (click)="selectDish(dish)">
+         <article class="dish-card" data-target="#dish-card" data-toggle="modal">
+            <img class="dish-card__image" src="{{baseURL + dish.img}}" />
+            <div class="dish-card__data">
+               <h2 class="dish-card__info">
+                  {{dish.name}}
+               </h2>
+               <h3 class="dish-card__price">{{dish.price}} ل.س</h3>
+               <button class="dish-card__add">+</button>
+            </div>
+         </article>
+      </div>
+   </div>
+</section>
+<app-dish-details-card #dishDetail [dish]="dish" class="modal fade dishcardmodal" id="dish-card"></app-dish-details-card>

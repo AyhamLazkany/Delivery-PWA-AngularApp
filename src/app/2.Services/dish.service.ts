@@ -13,12 +13,21 @@ export class DishService {
 
   constructor(private http: HttpClient, private ProcHttpMsgServ: ProcessHttpMsgService) { }
 
-  getDishes(storeId: string): Observable<Dish[]> {
-    return this.http.get<Dish[]>(baseURL + `dishes?storeId=${storeId}`)
+  getDishes(resId?: string): Observable<Dish[]> {
+    if (resId) {
+      return this.http.get<Dish[]>(baseURL + `dishes?resId=${resId}`)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
+    } else {
+      return this.http.get<Dish[]>(baseURL + `dishes`)
+      .pipe(catchError(this.ProcHttpMsgServ.handleError));
+    }
   }
   postDishes(dish: any): Observable<Dish> {
     return this.http.post<Dish>(baseURL + 'dishes', dish)
+      .pipe(catchError(this.ProcHttpMsgServ.handleError));
+  }
+  deleteDishes(resId: string): Observable<Dish> {
+    return this.http.delete<Dish>(baseURL + `dishes?resId=${resId}`)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
 

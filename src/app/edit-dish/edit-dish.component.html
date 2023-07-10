@@ -1,0 +1,130 @@
+<section class="account-page section-padding">
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-9 mx-auto">
+            <div class="row no-gutters">
+               <div class="col-md-4">
+                  <div class="card account-left">
+                     <div class="user-profile-header">
+                        <img src="{{dishSrcImg}}">
+                        <div class="pt-2">
+                           <span class="btn btn-primary btn-xl btn-file mb-0 mt-5 pb-0">
+                              <i class="mdi mdi-upload"></i>
+                              <input type="file" accept="image/*" (change)="selectDishImg($event)"
+                                 title="اضافة صورة للطبق">
+                           </span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-8">
+                  <div class="card card-body account-right">
+                     <div class="widget">
+                        <div class="section-header">
+                           <h5 class="heading-design-h5">
+                              تعديل خصائص الطبق
+                           </h5>
+                        </div>
+                        <form>
+                           <div class="row">
+                              <div class="col-sm-6">
+                                 <div class="form-group">
+                                    <label class="control-label">اسم الطبق<span class="required">*</span></label>
+                                    <input class="form-control border-form-control" name="name"
+                                       [(ngModel)]="dish.name" type="text">
+                                 </div>
+                              </div>
+                              <div class="col-sm-6">
+                                 <div class="form-group">
+                                    <label class="control-label">فئة الطبق<span class="required">*</span></label>
+                                    <select class="select2 form-control border-form-control"
+                                       [(ngModel)]="dish.category" name="category">
+                                       <option *ngFor="let categ of restaurant.categories">
+                                          {{categ}}
+                                       </option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-sm-6">
+                                 <div class="form-group">
+                                    <label class="control-label">الإضافات المتاحة<span class="required">*</span></label>
+                                    <select class="select2 form-control border-form-control" #newplugin>
+                                       <option *ngFor="let plugin of restaurant.plugins" 
+                                       value="{{plugin}}">{{plugin}}</option>
+                                    </select>
+                                 </div>
+                                 <button class="btn btn-warning" (click)="addplugin(newplugin.value)">اضف</button>
+                              </div>
+                              <div class="col-sm-6">
+                                 <div class="form-group">
+                                    <label class="control-label">الإضافات الحالية للطبق<span class="required">*</span></label>
+                                    <select class="select2 form-control border-form-control" #plugin>
+                                       <option *ngFor="let plugin of dish.plugins" 
+                                       value="{{plugin}}">{{plugin}}</option>
+                                    </select>
+                                 </div>
+                                 <button class="btn btn-danger" (click)="deleteplugin(plugin.value)">أزالة</button>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-sm-7 mx-auto" [style.border]="'none'">
+                                 <div class="form-group">
+                                    <label class="control-label">السعر<span class="required">*</span></label>
+                                    <input class="form-control border-form-control" name="price"
+                                       [(ngModel)]="dish.price" type="number">
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-12">
+                                 <div class="form-group">
+                                    <label class="control-label">الوصف<span class="required">*</span></label>
+                                    <textarea class="form-control border-form-control" name="location"
+                                       [(ngModel)]="dish.description" type="text"></textarea>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-sm-12 text-right">
+                                 <button type="button" class="btn btn-danger btn-lg" (click)="reset()"> اعادة تعيين
+                                 </button>
+                                 <button type="button" class="btn btn-success btn-lg" (click)="onSubmit()"> حفظ
+                                    التغييرات </button>
+                              </div>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+<!-- Button trigger modal -->
+<button #btnSuccess class="d-none" data-toggle="modal" data-target="#exampleModalCenter"></button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+   aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="col-10 col-sm-8 col-lg-7 m-auto">
+         <div class="alert alert-success shadow my-3 justi" role="alert" [style.height]="'200px'"
+            [style.border-radius]="'20px'">
+            <button #btnClose class="d-none" data-dismiss="modal"></button><br>
+            <div class="text-center">
+               <svg width="3em" height="3em" viewBox="0 0 16 16" class="m-1 bi bi-shield-fill-check" fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                     d="M8 .5c-.662 0-1.77.249-2.813.525a61.11 61.11 0 0 0-2.772.815 1.454 1.454 0 0 0-1.003 1.184c-.573 4.197.756 7.307 2.368 9.365a11.192 11.192 0 0 0 2.417 2.3c.371.256.715.451 1.007.586.27.124.558.225.796.225s.527-.101.796-.225c.292-.135.636-.33 1.007-.586a11.191 11.191 0 0 0 2.418-2.3c1.611-2.058 2.94-5.168 2.367-9.365a1.454 1.454 0 0 0-1.003-1.184 61.09 61.09 0 0 0-2.772-.815C9.77.749 8.663.5 8 .5zm2.854 6.354a.5.5 0 0 0-.708-.708L7.5 8.793 6.354 7.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+               </svg>
+            </div><br>
+            <p style="font-size:20px" class="text-center font-weight-light"><b class="mr-1">تم تحديث المعلومات<br>
+                  بنجاح!</b></p>
+         </div>
+      </div>
+   </div>
+</div>

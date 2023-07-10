@@ -22,7 +22,7 @@ export class RestaurantService {
   }
 
 
-  gettRestaurant(id: string): Observable<Restaurant> {
+  getRestaurant(id: string): Observable<Restaurant> {
     return this.http.get<Restaurant>(baseURL + 'restaurants/' + id)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
@@ -30,7 +30,7 @@ export class RestaurantService {
     return this.http.put<Restaurant>(baseURL + 'restaurants/' + id, restaurant)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
-  deletetRestaurant(id: string): Observable<Restaurant> {
+  deleteRestaurant(id: string): Observable<Restaurant> {
     return this.http.delete<Restaurant>(baseURL + 'restaurants/' + id)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }

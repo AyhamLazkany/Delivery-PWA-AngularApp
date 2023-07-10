@@ -9,7 +9,7 @@ export var owlJquery = () => {
          objowlcarousel.owlCarousel({
             responsive: {
                0: {
-                  items: 2.2,
+                  items: 2.1,
                },
                600: {
                   items: 3.1,
@@ -35,29 +35,61 @@ export var owlJquery = () => {
          });
       }
 
+// ===========Featured Owl Carousel============
+var objowlcarousel = $(".owl-carousel-featuredDish");
+if (objowlcarousel.length > 0) {
+   objowlcarousel.owlCarousel({
+      responsive: {
+         0: {
+            items: 2.9,
+         },
+         600: {
+            items: 3.2,
+            nav: false
+         },
+         1000: {
+            items: 3.6,
+         },
+         1200: {
+            items: 4,
+         },
+      },
+      lazyLoad: true,
+      pagination: false,
+      loop: true,
+      dots: true,
+      autoPlay: false,
+      navigation: true,
+      stopOnHover: true,
+      rtl: true,
+      nav: false,
+      navigationText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"]
+   });
+}
+
       // ===========Category Owl Carousel============
       var objowlcarousel = $(".owl-carousel-category");
       if (objowlcarousel.length > 0) {
          objowlcarousel.owlCarousel({
             responsive: {
                0: {
-                  items: 4.6,
+                  items: 5,
                },
                600: {
-                  items: 5.8,
+                  items: 6,
                   nav: false
                },
                1000: {
                   items: 8,
                },
                1200: {
-                  items: 8.9,
+                  items: 9,
                },
             },
             items: 8,
             lazyLoad: true,
             pagination: false,
-            loop: true,
+            loop: false,
             dots: true,
             autoPlay: 2000,
             navigation: true,
@@ -172,4 +204,40 @@ export var owlJquery = () => {
       }
 
    });
+}
+
+export var owlJqueryNav = () => {
+   $(document).ready(() => {
+      "use strict";
+      // ===========Featured Owl Carousel============
+      var objowlcarousel = $(".radio-input");
+      if (objowlcarousel.length > 0) {
+         objowlcarousel.owlCarousel({
+            responsive: {
+               0: {
+                  items: 4,
+               },
+               600: {
+                  items: 4,
+               },
+               1000: {
+                  items: 5,
+               },
+               1200: {
+                  items: 5,
+               },
+            },
+            lazyLoad: true,
+            pagination: false,
+            loop: false,
+            dots: false,
+            autoPlay: false,
+            navigation: true,
+            stopOnHover: true,
+            rtl: true,
+            nav: false,
+            navigationText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"]
+         });
+      }
+   })
 }

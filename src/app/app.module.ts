@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import 'hammerjs';
 
@@ -29,6 +30,12 @@ import { WishListComponent } from './wish-list/wish-list.component';
 import { OrderListComponent } from './oreder-list/oreder-list.component';
 import { RestaurantsComponent } from './restaurants/restaurants.component';
 import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
+import { CreatRestaurantComponent } from './creat-restaurant/creat-restaurant.component';
+import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.component';
+import { CreatDishComponent } from './creat-dish/creat-dish.component';
+import { EditDishComponent } from './edit-dish/edit-dish.component';
+import { CreatCategoryComponent } from './creat-category/creat-category.component';
+import { DishDetailsCardComponent } from './dish-details-card/dish-details-card.component';
 
 
 @NgModule({
@@ -42,7 +49,13 @@ import { RestaurantDetailsComponent } from './restaurant-details/restaurant-deta
     WishListComponent,
     OrderListComponent,
     RestaurantsComponent,
-    RestaurantDetailsComponent
+    RestaurantDetailsComponent,
+    CreatRestaurantComponent,
+    EditRestaurantComponent,
+    CreatDishComponent,
+    EditDishComponent,
+    CreatCategoryComponent,
+    DishDetailsCardComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +74,7 @@ import { RestaurantDetailsComponent } from './restaurant-details/restaurant-deta
     SaleRecService,
     AuthService,
     AuthGuardService,
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
