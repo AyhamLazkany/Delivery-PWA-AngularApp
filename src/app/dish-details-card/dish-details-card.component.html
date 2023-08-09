@@ -12,8 +12,7 @@
                <i class="mdi mdi-pencil"></i>
             </button>
             <h1 class="modal-dish-card__info">
-               <p>{{dish.name.split(' ')[0]}}</p> {{dish.name.split(' ')[1]}} <p>{{dish.name.split(' ')[2]}}</p>
-               {{dish.name.split(' ')[3]}}
+               {{dish.name}}
             </h1>
             <p class="modal-dish-card__info">
                {{dish.description}}
@@ -22,24 +21,28 @@
                الإضافات
             </h2>
             <div class="modal-dish-card__info">
-               <div class="row w-100 mx-0 mb-2 dish-radio-input" *ngIf="hasBread">
-                  <div class="form-check col-6 p-0 text-center">
-                     <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                        value="{{dish.plugins[0]}}" (change)="breadOption($event)">
-                     <label class="form-check-label" for="gridRadios1">
-                        {{dish.plugins[0].split(',')[0] + ' ' + dish.plugins[0].split(',')[1] + '+'}}
-                     </label>
+               <div class="row w-100 mx-auto mb-2 dish-radio-input" *ngIf="hasBread">
+                  <div class="col-6 pr-0">
+                     <div class="form-check text-center">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
+                           value="{{dish.plugins[0]}}" (change)="breadOption($event)">
+                        <label class="form-check-label" for="gridRadios1">
+                           {{dish.plugins[0].split(',')[0] + ' ' + dish.plugins[0].split(',')[1] + '+'}}
+                        </label>
+                     </div>
                   </div>
-                  <div class="form-check col-6 p-0 text-center">
-                     <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
-                        value="{{dish.plugins[1]}}" (change)="breadOption($event)">
-                     <label class="form-check-label" for="gridRadios2">
-                        {{dish.plugins[1].split(',')[0] + ' ' + dish.plugins[1].split(',')[1] + '+'}}
-                     </label>
+                  <div class="col-6 pr-0">
+                     <div class="form-check text-center">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
+                           value="{{dish.plugins[1]}}" (change)="breadOption($event)">
+                        <label class="form-check-label" for="gridRadios2">
+                           {{dish.plugins[1].split(',')[0] + ' ' + dish.plugins[1].split(',')[1] + '+'}}
+                        </label>
+                     </div>
                   </div>
                </div>
-               <div class="row w-100 pl-3 mx-0" *ngIf="hasBread">
-                  <div class="col-6 mb-2" *ngFor="let plug of dish.plugins; let i = index">
+               <div class="row w-100 mx-auto my-3 dish-checkbox-input" *ngIf="hasBread">
+                  <div class="col-6 pr-0 mb-2" *ngFor="let plug of dish.plugins; let i = index">
                      <div class="form-check check-input" *ngIf="i > 1">
                         <input class="form-check-input" value="{{plug}}" (change)="setPlugin($event, i)"
                            name="plug{{i}}" type="checkbox" id="gridCheck1">
@@ -49,11 +52,11 @@
                      </div>
                   </div>
                </div>
-               <div class="row w-100 pl-3 mx-0" *ngIf="!hasBread">
-                  <div class="col-6 mb-2" *ngFor="let plug of dish.plugins;let i = index">
+               <div class="row w-100 mx-auto my-3 dish-checkbox-input" *ngIf="!hasBread">
+                  <div class="col-6 pr-0 mb-2" *ngFor="let plug of dish.plugins;let i = index">
                      <div class="form-check check-input">
-                        <input class="form-check-input" [(ngModel)]="plugins[i]" name="plug{{i}}" type="checkbox"
-                           id="gridCheck1">
+                        <input class="form-check-input" value="{{plug}}" (change)="setPlugin($event, i)"
+                           name="plug{{i}}" type="checkbox" id="gridCheck1">
                         <label class="form-check-label" for="gridCheck1">
                            {{plug.split(',')[0] + ' ' + plug.split(',')[1] + '+'}}
                         </label>
@@ -65,18 +68,19 @@
             <div class="food-card_order-count">
                <div class="input-group">
                   <div class="input-group-append">
-                     <button class="btn btn-outline-secondary text-danger minus-btn" (click)="minusCount()"
+                     <button class="btn btn-outline-secondary text-danger minus-btn" (click)="minusQuantity()"
                         type="button"><i class="mdi mdi-minus-circle"></i></button>
                   </div>
-                  <input type="text" class="form-control" placeholder="{{order.count}}" value="{{order.count}}" name="count" disabled>
+                  <input type="text" class="form-control" placeholder="{{order.quantity}}" value="{{order.quantity}}"
+                     name="quantity" disabled>
                   <div class="input-group-prepend">
-                     <button class="btn btn-outline-secondary text-success add-btn" (click)="addCount()"
+                     <button class="btn btn-outline-secondary text-success add-btn" (click)="addQuantity()"
                         type="button"><i class="mdi mdi-plus-circle"></i></button>
                   </div>
                </div>
             </div>
-            <h3 class="modal-dish-card__price">{{dish.price}} ل<p>.</p>س</h3>
-            <button class="modal-dish-card__add"> اضف الى السلة </button>
+            <h3 class="modal-dish-card__price">{{order.bill}} ل<p>.</p>س</h3>
+            <button class="modal-dish-card__add" (click)="addToCart()"> اضف الى السلة </button>
             <button type="reset" class="d-none" #btnReset></button>
          </div>
       </form>

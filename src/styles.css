@@ -37,7 +37,7 @@ body {
     line-height: 25px;
     color: #888;
     direction: rtl;
-    width: 100vw;
+    width: 100%;
 }
 
 h1,
@@ -883,31 +883,28 @@ body.toggled::after {
 }
 
 .cart-list-product h5 {
-    margin: 0;
+    margin: 3px;
+    color: #5a6268;
 }
 
 .cart-list-product h6 {
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .cart-list-product>h6 span {
     color: var(--secondary);
 }
-
-.remove-cart {
-    position: absolute;
-    right: 18px;
-    top: 12px;
+.cart-list-product .badge {
+    font-weight: 500;
+    font-size: 12px;
+    padding: 3px 6px;
 }
 
-.cart-list-product .badge {
-    background: #f2fef2 none repeat scroll 0 0;
-    border: 1px solid #51aa1b;
-    border-radius: 2px;
-    color: #51aa1b;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 6px;
+.remove-cart {
+    font-size: 20px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
 }
 
 .cart-sidebar-footer {
@@ -1449,6 +1446,7 @@ label {
     display: none;
     background: #fff;
     text-align: center;
+    color: #5a6268;
 }
 
 .footer-fix-nav a {
@@ -1512,7 +1510,7 @@ input[type=file] {
 
 .modal-backdrop.show {
     transition: 300ms;
-    opacity: 0.3 !important;
+    opacity: 0.65 !important;
 }
 
 .modal.fade .modal-dialog {

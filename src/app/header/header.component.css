@@ -1,0 +1,28 @@
+.food-card_order-count {
+   width: fit-content;
+   position: absolute;
+   left: 30px;
+   bottom: 35px;
+}
+.food-card_order-count .input-group {
+   max-width: fit-content;
+}
+
+.food-card_order-count .form-control {
+   max-width: 30px;
+}
+.food-card_order-count input {
+   padding: 0px;
+   background: #f5f5f5;
+   border-color: #f5f5f5;
+   text-align: center;
+}
+
+.food-card_order-count button {
+   font-size: 20px;
+   padding: 0px;
+}
+.btn-outline-secondary:focus {
+   background-color: transparent !important;
+   outline-color: transparent !important;;
+}

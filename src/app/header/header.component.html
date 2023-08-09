@@ -145,40 +145,29 @@
       </h5>
    </div>
    <div class="cart-sidebar-body">
-      <div class="cart-list-product">
-         <a class="float-right remove-cart" href="#"><i class="mdi mdi-close"></i></a>
-         <img class="img-fluid" src="assets/img/item/11.jpg" alt="">
-         <h5><a href="#">اسم المنتج هنا</a></h5>
-         <h6><strong><span class="mdi mdi-approval"></span> الاضافات</strong> اسماء الاضافات</h6>
-         <p class="offer-price mb-0">السعر هنا ل.س</p>
-      </div>
-      <div class="cart-list-product">
-         <a class="float-right remove-cart" href="#"><i class="mdi mdi-close"></i></a>
-         <img class="img-fluid" src="assets/img/item/11.jpg" alt="">
-         <h5><a href="#">اسم المنتج هنا</a></h5>
-         <h6><strong><span class="mdi mdi-approval"></span> الاضافات</strong> اسماء الاضافات</h6>
-         <p class="offer-price mb-0">السعر هنا ل.س</p>
-      </div>
-      <div class="cart-list-product">
-         <a class="float-right remove-cart" href="#"><i class="mdi mdi-close"></i></a>
-         <img class="img-fluid" src="assets/img/item/11.jpg" alt="">
-         <h5><a href="#">اسم المنتج هنا</a></h5>
-         <h6><strong><span class="mdi mdi-approval"></span> الاضافات</strong> اسماء الاضافات</h6>
-         <p class="offer-price mb-0">السعر هنا ل.س</p>
-      </div>
-      <div class="cart-list-product">
-         <a class="float-right remove-cart" href="#"><i class="mdi mdi-close"></i></a>
-         <img class="img-fluid" src="assets/img/item/11.jpg" alt="">
-         <h5><a href="#">اسم المنتج هنا</a></h5>
-         <h6><strong><span class="mdi mdi-approval"></span> الاضافات</strong> اسماء الاضافات</h6>
-         <p class="offer-price mb-0">السعر هنا ل.س</p>
-      </div>
-      <div class="cart-list-product">
-         <a class="float-right remove-cart" href="#"><i class="mdi mdi-close"></i></a>
-         <img class="img-fluid" src="assets/img/item/11.jpg" alt="">
-         <h5><a href="#">اسم المنتج هنا</a></h5>
-         <h6><strong><span class="mdi mdi-approval"></span> الاضافات</strong> اسماء الاضافات</h6>
-         <p class="offer-price mb-0">السعر هنا ل.س</p>
+      <div class="cart-list-product" *ngFor="let order of orders; let i = index">
+         <a class="float-right remove-cart" (click)="deleteOrder(i)"><i class="mdi mdi-close"></i></a>
+         <img class="img-fluid" src="{{baseURL + order.dish.img}}" alt="">
+         <h5><a>{{order.dish.name}}</a></h5>
+         <h6 *ngIf="order.plugins != []"><strong><span class="mdi mdi-approval"></span> الاضافات </strong>
+            <span *ngFor="let plug of order.plugins" class="badge badge-pill bg-secondary text-dark">
+               {{plug.split(',')[0]}} </span>
+         </h6>
+         <div class="food-card_order-count">
+            <div class="input-group">
+               <div class="input-group-append">
+                  <button class="btn btn-outline-secondary text-danger minus-btn" (click)="minusQuantity(i)"
+                     type="button"><i class="mdi mdi-minus-circle"></i></button>
+               </div>
+               <input type="text" class="form-control" placeholder="{{order.quantity}}" value="{{order.quantity}}"
+                  name="quantity" disabled>
+               <div class="input-group-prepend">
+                  <button class="btn btn-outline-light text-success add-btn" (click)="addQuantity(i)"
+                     type="button"><i class="mdi mdi-plus-circle"></i></button>
+               </div>
+            </div>
+         </div>
+         <p class="offer-price mb-0">{{order.bill}} ل.س</p>
       </div>
    </div>
    <div class="cart-sidebar-footer">
@@ -220,16 +209,18 @@
                   </button>
                </li>
                <li class="list-inline-item" *ngIf="!isLogged">
-                  <button #btnProfile data-target="#bd-example-modal" data-toggle="modal" class="btn btn-link d-none d-lg-block"><i
-                        class="mdi mdi-account-circle"></i> سجل الدخول/انشاء حساب</button>
+                  <button #btnProfile data-target="#bd-example-modal" data-toggle="modal"
+                     class="btn btn-link d-none d-lg-block"><i class="mdi mdi-account-circle"></i> سجل الدخول/انشاء
+                     حساب</button>
                </li>
                <li class="list-inline-item" *ngIf="isLogged">
-                  <a routerLink="/profile" class="btn btn-link d-none d-lg-block"><i class="mdi mdi-account-circle"></i> {{ myusername
+                  <a routerLink="/profile" class="btn btn-link d-none d-lg-block"><i class="mdi mdi-account-circle"></i>
+                     {{ myusername
                      }}@</a>
                </li>
                <li class="list-inline-item cart-btn" *ngIf="isLogged">
                   <span data-toggle="offcanvas" class="btn btn-link border-none"><i class="mdi mdi-cart"></i>
-                     كرت الشراء<small class="cart-value">5</small></span>
+                     كرت الشراء<small class="cart-value">{{orders.length}}</small></span>
                </li>
             </ul>
          </div>

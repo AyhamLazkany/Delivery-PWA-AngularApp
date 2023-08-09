@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { AuthService } from '../2.Services/auth.service';
+import { CartService } from '../2.Services/cart.service';
 import { ChangeValueService } from '../2.Services/change-value.service';
-import { Subscription } from 'rxjs';
 import { Location } from "@angular/common";
 import { Router, NavigationEnd } from "@angular/router";
+import { Order } from '../1.Shared/order';
 
 @Component({
   selector: 'app-header',
@@ -11,22 +12,23 @@ import { Router, NavigationEnd } from "@angular/router";
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
 
   @ViewChild('btnClose') btnClose: any;
   @ViewChild('btnProfile') btnProfile: any;
   showSearch: boolean = false;
   isLogged!: boolean;
   myusername!: string;
-  subscription!: Subscription;
   admin!: boolean | undefined;
   user = { username: '', password: '' };
   createdUser = { username: '', password: '', phone: '' };
+  orders: Order[] = [];
   SigninerrMess!: string;
   SignupErrMess!: string;
   private history: string[] = [];
 
   constructor(private authService: AuthService,
+    private cartSrv: CartService,
     private CVSrv: ChangeValueService,
     private router: Router,
     private location: Location,
@@ -38,6 +40,42 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngOnInit() {
+    this.authService.loadUserCredentials();
+    this.CVSrv.loggedValue(this.authService.isLoggedIn());
+    this.CVSrv.adminValue(this.authService.isAdmin());
+    this.CVSrv.userIdValue(this.authService.getUserId());
+    this.CVSrv.currentLogged.subscribe((Logged) => { if (Logged) this.isLogged = Logged });
+    if (this.isLogged) {
+      this.CVSrv.usernameValue(this.authService.getUsername());
+      this.CVSrv.currentUsername.subscribe((username) => {
+        this.cartSrv.getCart().subscribe((orders) => {
+          this.CVSrv.ordersValue(orders);
+          this.CVSrv.currentOrders.subscribe((orders) => this.orders = orders);
+        });
+        if (username) this.myusername = username;
+      });
+    }
+  }
+
+  deleteOrder(index: number) {
+    this.cartSrv.deleteFromCart(index).subscribe(() => this.orders.splice(index, 1));
+  }
+
+  minusQuantity(index: number) {
+    if (this.orders[index].quantity > 1) {
+      this.orders[index].bill -= this.orders[index].bill / this.orders[index].quantity;
+      this.orders[index].quantity -= 1;
+    } else {
+      this.cartSrv.deleteFromCart(index).subscribe(() => this.orders.splice(index, 1));
+    }
+  }
+
+  addQuantity(index: number) {
+    this.orders[index].bill += this.orders[index].bill / this.orders[index].quantity;
+    this.orders[index].quantity += 1;
+  }
+
   back() {
     this.history.pop();
     if (this.history.length > 0) {
@@ -45,21 +83,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigateByUrl("/");
     }
-  }
-
-  ngOnInit() {
-    this.authService.loadUserCredentials();
-    this.CVSrv.loggedValue(this.authService.isLoggedIn());
-    this.CVSrv.adminValue(this.authService.isAdmin());
-    this.subscription = this.CVSrv.currentLogged.subscribe((Logged) => { if (Logged) this.isLogged = Logged });
-    if (this.isLogged) {
-      this.CVSrv.usernameValue(this.authService.getUsername());
-      this.subscription = this.CVSrv.currentUsername.subscribe((username) => { if (username) this.myusername = username });
-    }
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   clickSearchbtn() {

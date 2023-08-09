@@ -15,6 +15,7 @@ interface AuthResponse {
 interface credentials {
   authToken: string;
   username: string;
+  userId: string;
   admin: boolean;
 }
 
@@ -39,6 +40,7 @@ export class AuthService {
   isAuthenticated: boolean = false;
   authToken: string | any = undefined;
   username: string | any = undefined;
+  userId: string | any = undefined;
   admin: boolean | any = false;
 
   constructor(private http: HttpClient,
@@ -49,6 +51,10 @@ export class AuthService {
     return this.username;
   }
 
+  getUserId(): string {
+    return this.userId;
+  }
+
   getToken(): string {
     return this.authToken;
   }
@@ -56,6 +62,7 @@ export class AuthService {
   useCredentials(credentials: credentials) {
     this.isAuthenticated = true;
     this.username = credentials.username;
+    this.userId = credentials.userId;
     this.authToken = credentials.authToken;
     this.admin = credentials.admin;
   }
@@ -65,6 +72,7 @@ export class AuthService {
     this.admin = undefined;
     this.authToken = undefined;
     this.username = undefined;
+    this.userId = undefined;
     localStorage.removeItem(this.TokenKey);
   }
 
@@ -111,7 +119,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(baseURL + 'users/login',
       { 'username': user.username, 'password': user.password })
       .pipe(map(res => {
-        this.storeUserCredentials({ username: res.user.username, admin: res.user.admin, authToken: res.token });
+        this.storeUserCredentials({ userId: res.user._id, username: res.user.username, admin: res.user.admin, authToken: res.token });
         this.Credentials = localStorage.getItem(this.TokenKey);
         return { success: res.success, status: res.status, user: res.user };
       }), catchError(error => this.ProcessHttpMsgService.handleError(error)));
@@ -139,7 +147,7 @@ export class AuthService {
         if (user.username) {
           let authtoken = this.authToken;
           this.destroyUserCredentials();
-          this.storeUserCredentials({ username: res.user.username, admin: res.user.admin, authToken: authtoken });
+          this.storeUserCredentials({ userId: res.user._id, username: res.user.username, admin: res.user.admin, authToken: authtoken });
           return { status: res.status, user: res.user };
         } else {
           return { status: res.status, user: res.user };

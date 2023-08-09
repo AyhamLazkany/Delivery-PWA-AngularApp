@@ -88,10 +88,8 @@ export class EditRestaurantComponent implements OnInit {
                 break;
               case HttpEventType.Response:
                 console.log('restaurant image successfully uploaded!', event.body);
-                this.uploadSrv.deleteImg(this.restaurant.img.split('/')[this.restaurant.img.split('/').length - 1], 'restaurants').subscribe(() => {
-                  this.restaurant.img = `assets/img/dishes/${event.body.filename}`;
-                  resolve(true);
-                });
+                this.restaurant.img = `assets/img/dishes/${event.body.filename}`;
+                resolve(true);
             }
           }, err => reject(false));
       } else reject(false);

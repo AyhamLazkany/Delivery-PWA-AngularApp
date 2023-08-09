@@ -13,22 +13,23 @@ export class CartService {
   constructor(public auth: AuthService, private http: HttpClient, private ProcHttpMsgServ: ProcessHttpMsgService) { }
 
   getCart(): Observable<any> {
-    return this.http.get<any>(baseURL + 'cart')
+    return this.http.get<any>(baseURL + 'carts')
       .pipe(catchError(error => this.ProcHttpMsgServ.handleError(error)));
   }
 
-  postCart(id: string, plugins: string[]): Observable<any> {
-    return this.http.post<any>(baseURL + 'cart/' + id, { plugins: plugins })
+  postCart(oreder: any, userId: string): Observable<any> {
+    return this.http.post<any>(baseURL + `carts?user=${userId}`, oreder)
     .pipe(catchError(error => this.ProcHttpMsgServ.handleError(error)));
   }
 
-  deleteFromCart(id: string): Observable<any> {
-    return this.http.delete<any>(baseURL + 'cart/' + id)
+  deleteFromCart(index: number): Observable<any> {
+    return this.http.delete<any>(baseURL + 'carts/' + index)
     .pipe(catchError(error => this.ProcHttpMsgServ.handleError(error)));
   }
 
   deleteCart(): Observable<any> {
-    return this.http.delete<any>(baseURL + 'cart')
+    return this.http.delete<any>(baseURL + 'carts')
     .pipe(catchError(error => this.ProcHttpMsgServ.handleError(error)));
   }
+
 }
