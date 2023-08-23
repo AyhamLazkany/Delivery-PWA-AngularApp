@@ -30,6 +30,10 @@ export class RestaurantService {
     return this.http.put<Restaurant>(baseURL + 'restaurants/' + id, restaurant)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
+  putRestaurantCounter(id: string): Observable<any> {
+    return this.http.put<any>(baseURL + 'restaurants/addcounter/' + id, {})
+      .pipe(catchError(this.ProcHttpMsgServ.handleError));
+  }
   deleteRestaurant(id: string): Observable<Restaurant> {
     return this.http.delete<Restaurant>(baseURL + 'restaurants/' + id)
       .pipe(catchError(this.ProcHttpMsgServ.handleError));

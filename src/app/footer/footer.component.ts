@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChangeValueService } from '../2.Services/change-value.service';
-import { Subscription } from 'rxjs';
 declare var jQuery: any; 
 
 @Component({
@@ -8,16 +7,14 @@ declare var jQuery: any;
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
-export class FooterComponent implements OnInit, OnDestroy {
+export class FooterComponent implements OnInit {
 
-  @Output() openDialog = new EventEmitter<void>();
   isLogged!: boolean;
-  subscription!: Subscription;
 
   constructor(private CVSrv: ChangeValueService) { };
 
   ngOnInit() {
-    this.subscription = this.CVSrv.currentLogged.subscribe((logged) => { if (logged != undefined) this.isLogged = logged });
+    this.CVSrv.currentLogged.subscribe((logged) => { if (logged != undefined) this.isLogged = logged });
     this.CVSrv.loggedValue(this.isLogged);
     ( ($) => {
       var $main_nav = $('#main-nav');
@@ -101,13 +98,9 @@ export class FooterComponent implements OnInit, OnDestroy {
       });
     })(jQuery);
   }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
   
   OpenDialog() {
-   this.openDialog.emit(); 
+    this.CVSrv.ClickProfileBtn();
   }
 
 }

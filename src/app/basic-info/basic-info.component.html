@@ -1,0 +1,35 @@
+<section class="account-page section-padding">
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-9 mx-auto">
+            <div class="row no-gutters">
+               <div class="col-md-4">
+                  <div class="card account-left">
+                     <div class="user-profile-header">
+                        <h5 class="mb-1 text-secondary">Hi <strong>@{{ user.username }}</strong></h5>
+                        <p>{{user.phone}} 963+</p>
+                     </div>
+                     <div class="list-group">
+                        <a routerLink="/profile" class="list-group-item list-group-item-action"><i aria-hidden="true"
+                              class="mdi mdi-account-outline"></i> صفحتي الشخصية</a>
+                        <a routerLink="/myaddress" class="list-group-item list-group-item-action"><i aria-hidden="true"
+                              class="mdi mdi-map-marker-circle"></i> عناويني</a>
+                        <a routerLink="/wishlist" class="list-group-item list-group-item-action"><i aria-hidden="true"
+                              class="mdi mdi-heart-outline"></i> المفضلة</a>
+                        <a routerLink="/orderlist" class="list-group-item list-group-item-action"><i aria-hidden="true"
+                              class="mdi mdi-cart"></i> قائمة الطلبات</a>
+                        <a *ngIf="user.admin" routerLink="/saleslist" class="list-group-item list-group-item-action"><i
+                              aria-hidden="true" class="mdi mdi-format-list-bulleted"></i> قائمة ألمبيعات</a>
+                        <a *ngIf="user.admin" routerLink="/basicinfo"
+                           class="list-group-item list-group-item-action active"><i aria-hidden="true"
+                              class="mdi mdi-information-outline"></i> المعلومات الاساسية للتطبيق</a>
+                        <a (click)="logout()" routerLink="" class="list-group-item list-group-item-action"><i
+                              aria-hidden="true" class="mdi mdi-lock"></i> تسجيل الخروج</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>

@@ -6,7 +6,7 @@
    width: 88vw !important;
    max-width: 380px;
    min-height: 500px;
-   background-color: #a5a5a5;
+   background-color: #9b9b9b;
 }
 
 .modal-dish-card__image {
@@ -25,7 +25,7 @@
    min-height: 500px;
    border-bottom-left-radius: 30px;
    border-bottom-right-radius: 30px;
-   background-color: #a5a5a5;
+   background-color: #9b9b9b;
    padding-top: 60%;
 }
 
@@ -34,6 +34,17 @@ h1.modal-dish-card__info {
    padding: 3px 6px;
    font-size: 21px;
    font-weight: 600;
+   float: right;
+   width: 85%;
+}
+
+h1.favorite {
+   margin: 0;
+   padding: 3px 6px;
+   font-size: 21px;
+   font-weight: 600;
+   float: left;
+   width: 15%;
 }
 
 h1.modal-dish-card__info p {
@@ -180,14 +191,14 @@ p.modal-dish-card__info {
 }
 
 .dish-radio-input {
-   border: 2px solid #4a4a4a;
+   border: 2px solid #787878;
    border-radius: 20px;
    padding: 10px 0;
    max-width: 90%;
 }
 
 .dish-checkbox-input {
-   border: 2px solid #4a4a4a;
+   border: 2px solid #787878;
    border-radius: 20px;
    padding: 10px;
    max-width: 90%;

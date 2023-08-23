@@ -17,7 +17,11 @@
                         <a routerLink="/wishlist" class="list-group-item list-group-item-action"><i aria-hidden="true"
                               class="mdi mdi-heart-outline"></i> المفضلة</a>
                         <a routerLink="/orderlist" class="list-group-item list-group-item-action"><i aria-hidden="true"
-                              class="mdi mdi-format-list-bulleted"></i> قائمة الطلبات</a>
+                              class="mdi mdi-cart"></i> قائمة الطلبات</a>
+                        <a *ngIf="user.admin" routerLink="/saleslist" class="list-group-item list-group-item-action"><i
+                              aria-hidden="true" class="mdi mdi-format-list-bulleted"></i> قائمة ألمبيعات</a>
+                        <a *ngIf="user.admin" routerLink="/basicinfo" class="list-group-item list-group-item-action"><i
+                              aria-hidden="true" class="mdi mdi-information-outline"></i> المعلومات الاساسية للتطبيق</a>
                         <a (click)="logout()" routerLink="" class="list-group-item list-group-item-action"><i
                               aria-hidden="true" class="mdi mdi-lock"></i> تسجيل الخروج</a>
                      </div>

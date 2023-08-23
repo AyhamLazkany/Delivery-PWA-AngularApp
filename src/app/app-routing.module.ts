@@ -8,6 +8,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { MyAddressComponent } from './my-address/my-address.component';
 import { WishListComponent } from './wish-list/wish-list.component';
 import { OrderListComponent } from './oreder-list/oreder-list.component';
+import { SalesListComponent } from './sales-list/sales-list.component';
+import { BasicInfoComponent } from './basic-info/basic-info.component';
 import { CreatRestaurantComponent } from './creat-restaurant/creat-restaurant.component';
 import { CreatDishComponent } from './creat-dish/creat-dish.component';
 import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.component';
@@ -28,11 +30,8 @@ const routes: Routes = [
   { path: 'myaddress', component: MyAddressComponent, canActivate: [AuthGuard] },
   { path: 'wishlist', component: WishListComponent, canActivate: [AuthGuard] },
   { path: 'orderlist', component: OrderListComponent, canActivate: [AuthGuard] },
-/*   
-  { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] },
-  { path: 'bayRecs', component: BayRecsComponent, canActivate: [AuthGuard] },
-  { path: 'saleRecs', component: SaleRecsComponent, canActivate: [AuthGuard] }
-*/
+  { path: 'saleslist', component: SalesListComponent, canActivate: [isAdmin] },
+  { path: 'basicinfo', component: BasicInfoComponent, canActivate: [isAdmin] },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

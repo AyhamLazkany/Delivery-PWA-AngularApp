@@ -16,10 +16,11 @@
                               class="mdi mdi-map-marker-circle"></i> عناويني</a>
                         <a routerLink="/wishlist" class="list-group-item list-group-item-action"><i aria-hidden="true"
                               class="mdi mdi-heart-outline"></i> المفضلة</a>
-                        <a routerLink="/orderlist" class="list-group-item list-group-item-action active"><i
-                              aria-hidden="true" class="mdi mdi-cart"></i> قائمة الطلبات</a>
-                        <a *ngIf="user.admin" routerLink="/saleslist" class="list-group-item list-group-item-action"><i
-                              aria-hidden="true" class="mdi mdi-format-list-bulleted"></i> قائمة ألمبيعات</a>
+                        <a routerLink="/orderlist" class="list-group-item list-group-item-action"><i aria-hidden="true"
+                              class="mdi mdi-cart"></i> قائمة الطلبات</a>
+                        <a *ngIf="user.admin" routerLink="/saleslist"
+                           class="list-group-item list-group-item-action active"><i aria-hidden="true"
+                              class="mdi mdi-format-list-bulleted"></i> قائمة ألمبيعات</a>
                         <a *ngIf="user.admin" routerLink="/basicinfo" class="list-group-item list-group-item-action"><i
                               aria-hidden="true" class="mdi mdi-information-outline"></i> المعلومات الاساسية للتطبيق</a>
                         <a (click)="logout()" routerLink="" class="list-group-item list-group-item-action"><i
@@ -34,16 +35,17 @@
 </section>
 <div class="list-cart row m-0">
    <div *ngFor="let cart of carts; let i = index" class="list-body col-10 col-sm-9 col-md-8">
-      <span class="badge badge-pill text-warning status"
-         *ngIf="cart.status == 'بانتظار الموافقة'">{{cart.status}}</span>
-      <span class="badge badge-pill text-primary status"
-         *ngIf="cart.status == 'الطعام قيد التحضير'">{{cart.status}}</span>
-      <span class="badge badge-pill text-warning status"
-         *ngIf="cart.status == 'الطعام على الطريق'">{{cart.status}}</span>
-      <span class="badge badge-pill text-success status" *ngIf="cart.status == 'مكتمل'">{{cart.status}}</span>
+      <span class="badge text-dark username"> * {{cart.username}} * </span>
+      <span class="badge badge-pill text-warning status" *ngIf="cart.status == 'بانتظار الموافقة'"
+         (click)="putStatus(i, cart._id, 'الطعام قيد التحضير', cart.userId)">قبول</span>
+      <span class="badge badge-pill text-primary status" *ngIf="cart.status == 'الطعام قيد التحضير'"
+         (click)="putStatus(i, cart._id, 'الطعام على الطريق', cart.userId)">ارسال عامل التوصيل</span>
+      <span class="badge badge-pill text-warning status" *ngIf="cart.status == 'الطعام على الطريق'"
+         (click)="putStatus(i, cart._id, 'مكتمل', cart.userId)">اتمام العملية</span>
       <span class="badge badge-pill text-danger status" *ngIf="cart.status == 'ملغى'">{{cart.status}}</span>
+      <span class="badge badge-pill text-success status" *ngIf="cart.status == 'مكتمل'">{{cart.status}}</span>
       <span class="badge text-danger cancel" *ngIf="cart.status != 'ملغى' && cart.status != 'مكتمل'"
-         (click)="cancelOrder(i, cart._id)">الغاء الطلب <i class="mdi mdi-close"></i></span>
+         (click)="cancelOrder(i, cart._id, cart.userId)">الغاء الطلب <i class="mdi mdi-close"></i></span>
       <div class="list-product" *ngFor="let order of cart.orders; let i = index">
          <img class="img-fluid" src="{{baseURL + order.dish.img}}">
          <h5><a>{{order.dish.name}}</a></h5>

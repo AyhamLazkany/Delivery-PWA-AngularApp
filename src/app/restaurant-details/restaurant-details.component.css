@@ -3,7 +3,8 @@
   --------------------------------------------------------------*/
 .breadcrumbs {
    padding: 140px 0 60px 0;
-   height: 40vh;
+   min-height: 35vh;
+   max-height: 300px;
    position: relative;
    background-size: cover;
    background-position: center;
@@ -53,7 +54,13 @@
    padding-right: 10px;
    color: #fff;
    content: "/";
-}  
+}
+
+.favorite {
+   position: absolute;
+   left: 5%;
+   bottom: 10px;
+}
 
 .radio-input input {
    display: none;

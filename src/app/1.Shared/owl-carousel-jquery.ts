@@ -35,37 +35,38 @@ export var owlJquery = () => {
          });
       }
 
-// ===========Featured Owl Carousel============
-var objowlcarousel = $(".owl-carousel-featuredDish");
-if (objowlcarousel.length > 0) {
-   objowlcarousel.owlCarousel({
-      responsive: {
-         0: {
-            items: 2.9,
-         },
-         600: {
-            items: 3.2,
-            nav: false
-         },
-         1000: {
-            items: 3.6,
-         },
-         1200: {
-            items: 4,
-         },
-      },
-      lazyLoad: true,
-      pagination: false,
-      loop: true,
-      dots: true,
-      autoPlay: false,
-      navigation: true,
-      stopOnHover: true,
-      rtl: true,
-      nav: false,
-      navigationText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"]
-   });
-}
+      // ===========Featured Owl Carousel============
+      var objowlcarousel = $(".owl-carousel-featuredDish");
+      if (objowlcarousel.length > 0) {
+         objowlcarousel.owlCarousel({
+            responsive: {
+               0: {
+                  items: 2.9,
+               },
+               600: {
+                  items: 3.2,
+                  nav: false
+               },
+               1000: {
+                  items: 3.6,
+               },
+               1200: {
+                  items: 4,
+               },
+            },
+            items: 3,
+            lazyLoad: true,
+            pagination: false,
+            loop: false,
+            dots: true,
+            autoPlay: false,
+            navigation: true,
+            stopOnHover: true,
+            rtl: true,
+            nav: false,
+            navigationText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"]
+         });
+      }
 
       // ===========Category Owl Carousel============
       var objowlcarousel = $(".owl-carousel-category");
@@ -151,7 +152,7 @@ if (objowlcarousel.length > 0) {
          navigation: true,
          dots: true,
          pagination: false,
-         nav: false,
+         nav: true,
          navigationText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
          responsiveRefreshRate: 100,
          afterInit: function (el: any) {
@@ -209,7 +210,7 @@ if (objowlcarousel.length > 0) {
 export var owlJqueryNav = () => {
    $(document).ready(() => {
       "use strict";
-      // ===========Featured Owl Carousel============
+      // ===========radio-input Owl Carousel============
       var objowlcarousel = $(".radio-input");
       if (objowlcarousel.length > 0) {
          objowlcarousel.owlCarousel({
@@ -226,6 +227,26 @@ export var owlJqueryNav = () => {
                1200: {
                   items: 5,
                },
+            },
+            lazyLoad: true,
+            pagination: false,
+            loop: false,
+            dots: false,
+            autoPlay: false,
+            navigation: true,
+            stopOnHover: true,
+            rtl: true,
+            nav: false,
+            navigationText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"]
+         });
+      }
+      var objowlcarousel = $(".favs");
+      if (objowlcarousel.length > 0) {
+         objowlcarousel.owlCarousel({
+            responsive: {
+               0: {
+                  items: 2,
+               }
             },
             lazyLoad: true,
             pagination: false,

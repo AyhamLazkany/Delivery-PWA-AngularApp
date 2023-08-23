@@ -2,7 +2,6 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RestaurantService } from './2.Services/restaurant.service';
 import { ChangeValueService } from './2.Services/change-value.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +11,6 @@ import { Subscription } from 'rxjs';
 
 export class AppComponent implements OnInit {
 
-  subscription!: Subscription;
   admin!: boolean | undefined;
   title = 'AngularApp';
   @ViewChild('header') header: any;
@@ -22,7 +20,7 @@ export class AppComponent implements OnInit {
     private CVSrv: ChangeValueService) { }
 
   async ngOnInit() {
-    this.subscription = await this.CVSrv.currentIsAdmin.subscribe((admin) => this.admin = admin);
+    await this.CVSrv.currentIsAdmin.subscribe((admin) => this.admin = admin);
     if (this.admin == true) {
       this.updateTime();
       setInterval(this.updateTime, 60000);
@@ -68,7 +66,4 @@ export class AppComponent implements OnInit {
     }
   }
 
-  openDialog() {
-    this.header.clickProfilebtn();
-  }
 }

@@ -31,8 +31,13 @@
                </li>
             </ul>
          </h5>
+         <h3 *ngIf="!favorite" class="favorite border border-light rounded float-right mt-1 p-1">
+            <span class="mdi mdi-heart-outline text-white" (click)="changeFavorite()"></span>
+         </h3>
+         <h3 *ngIf="favorite" class="favorite border border-danger rounded float-right mt-1 p-1">
+            <span class="mdi mdi-heart text-danger" (click)="changeFavorite()"></span>
+         </h3>
          <br>
-         <p class="text-white" data-aos="fade-up"></p>
       </div>
    </div><br>
    <div class="owl-carousel radio-input col-12 col-md-6">

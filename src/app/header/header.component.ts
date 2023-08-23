@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { AuthService } from '../2.Services/auth.service';
-import { CartService } from '../2.Services/cart.service';
 import { ChangeValueService } from '../2.Services/change-value.service';
+import { InitialOrderService } from '../2.Services/initial-order.service';
 import { Location } from "@angular/common";
 import { Router, NavigationEnd } from "@angular/router";
-import { Order } from '../1.Shared/order';
 
 @Component({
   selector: 'app-header',
@@ -16,22 +15,24 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('btnClose') btnClose: any;
   @ViewChild('btnProfile') btnProfile: any;
+  @ViewChild('cartClose') cartClose: any;
   showSearch: boolean = false;
   isLogged!: boolean;
+  length!: number;
   myusername!: string;
-  admin!: boolean | undefined;
+  admin: boolean = false;
   user = { username: '', password: '' };
+  initialOrder: any = { exists: false, status: '' };
   createdUser = { username: '', password: '', phone: '' };
-  orders: Order[] = [];
   SigninerrMess!: string;
   SignupErrMess!: string;
   private history: string[] = [];
 
   constructor(private authService: AuthService,
-    private cartSrv: CartService,
     private CVSrv: ChangeValueService,
     private router: Router,
     private location: Location,
+    private IOSrv: InitialOrderService,
     @Inject('BaseURL') public baseURL: any) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -46,34 +47,39 @@ export class HeaderComponent implements OnInit {
     this.CVSrv.adminValue(this.authService.isAdmin());
     this.CVSrv.userIdValue(this.authService.getUserId());
     this.CVSrv.currentLogged.subscribe((Logged) => { if (Logged) this.isLogged = Logged });
+    if (this.CVSrv.subscription == undefined) {
+      this.CVSrv.subscription = this.CVSrv.callClickProfilebtn.subscribe(() => this.clickProfilebtn());
+    }
     if (this.isLogged) {
       this.CVSrv.usernameValue(this.authService.getUsername());
       this.CVSrv.currentUsername.subscribe((username) => {
-        this.cartSrv.getCart().subscribe((orders) => {
-          this.CVSrv.ordersValue(orders);
-          this.CVSrv.currentOrders.subscribe((orders) => this.orders = orders);
-        });
         if (username) this.myusername = username;
+        this.orderStatus();
       });
-    }
-  }
-
-  deleteOrder(index: number) {
-    this.cartSrv.deleteFromCart(index).subscribe(() => this.orders.splice(index, 1));
-  }
-
-  minusQuantity(index: number) {
-    if (this.orders[index].quantity > 1) {
-      this.orders[index].bill -= this.orders[index].bill / this.orders[index].quantity;
-      this.orders[index].quantity -= 1;
     } else {
-      this.cartSrv.deleteFromCart(index).subscribe(() => this.orders.splice(index, 1));
+      setTimeout(() => {
+        this.clickProfilebtn();
+      }, 2000);
     }
   }
 
-  addQuantity(index: number) {
-    this.orders[index].bill += this.orders[index].bill / this.orders[index].quantity;
-    this.orders[index].quantity += 1;
+  orderStatus() {
+    this.IOSrv.getInitialOrder().subscribe((res) => {
+      this.initialOrder.exists = res.exists;
+      this.initialOrder.status = res.status;
+      if (res.exists == true)
+        var interval = setInterval(() => {
+          this.IOSrv.getInitialOrder().subscribe((res) => {
+            this.initialOrder.exists = res.exists;
+            this.initialOrder.status = res.status;
+            if (res.exists == false) clearInterval(interval);
+          });
+        }, 20000);
+    });
+  }
+
+  orderLength(length: number) {
+    this.length = length;
   }
 
   back() {
@@ -98,13 +104,8 @@ export class HeaderComponent implements OnInit {
     this.authService.logIn(this.user)
       .subscribe(res => {
         if (res) {
-          this.authService.loadUserCredentials();
-          this.isLogged = this.authService.isLoggedIn();
-          if (this.isLogged) {
-            this.CVSrv.loggedValue(this.isLogged);
-            this.myusername = this.authService.getUsername();
-          }
           this.btnClose.nativeElement.click();
+          window.location.reload();
         } else {
           console.log(res);
         }

@@ -1,0 +1,45 @@
+.favs input {
+   display: none;
+}
+
+.favs {
+   --container_width: 95%;
+   margin: auto;
+   position: relative;
+   display: flex;
+   align-items: center;
+   border-radius: 10px;
+   background-color: #161616;
+   box-shadow: #161616 0px 0px 6px 3px;
+   color: #fff;
+   width: var(--container_width);
+   overflow: hidden;
+   border: 1px solid rgba(53, 52, 52, 0.226);
+}
+
+.favs label {
+   min-width: calc(var(--container_width) / 4);
+   cursor: pointer;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   z-index: 1;
+   font-weight: 500;
+   letter-spacing: -1px;
+   font-size: 14px;
+}
+.favs label:has(input:checked) {
+   color: #fec61a;
+}
+.product-body h5 {
+   float: right;
+   width: 90%;
+
+}
+
+span.favorite {
+   font-size: 21px;
+   font-weight: 600;
+   float: left;
+   width: 10%;
+}

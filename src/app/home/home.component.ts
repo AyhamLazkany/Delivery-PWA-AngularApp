@@ -7,7 +7,7 @@ import { DishService } from '../2.Services/dish.service';
 import { CategoryService } from '../2.Services/category.service';
 import { ChangeValueService } from '../2.Services/change-value.service';
 import { ImgUploadService } from '../2.Services/img-upload.service';
-import { Subscription } from 'rxjs';
+import { HeaderComponent } from '../header/header.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 
@@ -25,8 +25,8 @@ export class HomeComponent implements OnInit {
   restaurants!: Restaurant[];
   categories!: any[];
   categErrMssg!: string;
-  admin: boolean | undefined;
-  subscription!: Subscription;
+  admin: boolean = false;
+  logged: boolean = false;
   @ViewChild('dishDetail') dishDetail: any;
 
   constructor(@Inject('BaseURL') public baseURL: any,
@@ -42,18 +42,23 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscription = this.CVSrv.currentIsAdmin.subscribe((admin) => this.admin = admin);
-    this.imgSrv.getImages().subscribe((imgs) => {
-      this.sliderImages = imgs;
-      this.resSrv.getRestaurants().subscribe((res) => {
-        this.restaurants = res;
-        this.catSrv.getCategories().subscribe((categories) => {
-          this.categories = categories;
-          this.dishSrv.getDishes().subscribe((dishes) => {
-            this.featuredDishes = dishes;
-            owlJquery();
-          })
-        }, err => this.categErrMssg = err);
+    this.CVSrv.currentIsAdmin.subscribe((admin) => {
+      this.admin = admin;
+      this.CVSrv.currentLogged.subscribe((logged) => {
+        this.logged = logged;
+        this.imgSrv.getImages().subscribe((imgs) => {
+          this.sliderImages = imgs;
+          this.resSrv.getRestaurants().subscribe((res) => {
+            this.restaurants = res;
+            this.catSrv.getCategories().subscribe((categories) => {
+              this.categories = categories;
+              this.dishSrv.getDishes().subscribe((dishes) => {
+                this.featuredDishes = dishes;
+                owlJquery();
+              })
+            }, err => this.categErrMssg = err);
+          });
+        });
       });
     });
   }
@@ -62,7 +67,8 @@ export class HomeComponent implements OnInit {
     this.dish = { _id: '', category: '', description: '', img: '', name: '', resId: '', resname: '', rate: 0, plugins: [], price: 0 };
     let plugins: string[] = [];
     for (let i = 0; i < dish.plugins.length; i++) {
-      if (dish.plugins[i].split(',')[0] == 'خبز' || dish.plugins[i].split(',')[0] == 'صمون') plugins.push(dish.plugins[i]);
+      if (dish.plugins[i].split(',')[0] == 'خبز') plugins[0] = dish.plugins[i];
+      if (dish.plugins[i].split(',')[0] == 'صمون') plugins[1] = dish.plugins[i];
     };
     if (plugins.length > 1) {
       for (let i = 0; i < dish.plugins.length; i++) {

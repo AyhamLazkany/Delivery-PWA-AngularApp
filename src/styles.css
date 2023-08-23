@@ -692,7 +692,7 @@ option:hover {
     max-width: 100%;
     aspect-ratio: 1 / 1;
     scale: 1.13;
-    top: -18%;
+    top: -22%;
     z-index: 2;
     filter: drop-shadow(2px 6px 3px rgba(0, 0, 0, 0.6));
 }
@@ -708,7 +708,7 @@ option:hover {
 
 .dish-card__info {
     padding: 0 10px;
-    height: 30px;
+    height: 20px;
     line-height: 15px;
     font-size: 14px;
     font-weight: 700;
@@ -803,13 +803,13 @@ body.toggled::after {
 }
 
 .cart-sidebar {
-    background: #fff none repeat scroll 0 0;
+    background: #f8f8f8 none repeat scroll 0 0;
     overflow: auto;
     position: fixed;
     left: -400px;
     top: 0;
     width: 400px;
-    z-index: 99;
+    z-index: 1000000;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -854,7 +854,11 @@ body.toggled::after {
 }
 
 .cart-list-product {
-    border-bottom: 1px solid #ececec;
+    width: 95%;
+    margin: 10px auto;
+    background-color: #eee;
+    filter: drop-shadow(0 0 10px #c0c0c0);
+    border-radius: 15px;
     overflow: hidden;
     padding: 14px 20px;
     position: relative;
@@ -894,6 +898,7 @@ body.toggled::after {
 .cart-list-product>h6 span {
     color: var(--secondary);
 }
+
 .cart-list-product .badge {
     font-weight: 500;
     font-size: 12px;
@@ -1323,8 +1328,8 @@ label {
     --profile--contaner-width: 300px;
     width: 95%;
     max-width: 400px;
-    aspect-ratio: 4 / 3;
-    border-radius: 20px;
+    aspect-ratio: 1 / 1;
+    border-radius: 40%;
     object-fit: cover;
 }
 

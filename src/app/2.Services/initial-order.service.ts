@@ -3,28 +3,33 @@ import { HttpClient } from '@angular/common/http';
 import { baseURL } from '../1.Shared/baseurl';
 import { Observable, catchError } from 'rxjs';
 import { ProcessHttpMsgService } from './process-http-msg.service';
-import { Order } from '../1.Shared/order';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SaleRecService {
+export class InitialOrderService {
+
+  // subscription: EventSource = new EventSource('initialOrder/get');
 
   constructor(private http: HttpClient, private ProcHttpMsgServ: ProcessHttpMsgService) { }
 
-  getSaleRecs(): Observable<any> {
-    return this.http.get<any>(baseURL + 'saleRecords')
+  getInitialOrder(): Observable<any> {
+    return this.http.get<any>(baseURL + 'initialOrder')
       .pipe(catchError(error => this.ProcHttpMsgServ.handleError(error)));
-  }
+  };
 
-  postSaleRec(orders: Order[], total: number, date: string | undefined): Observable<any> {
-    return this.http.post<any>(baseURL + 'saleRecords/', { orders: orders, total: total, date: date })
+  postInitialOrder(status: string) {
+    return this.http.post<any>(baseURL + 'initialOrder', { status: status })
       .pipe(catchError(error => this.ProcHttpMsgServ.handleError(error)));
-  }
+  };
 
-  putOrderStatus(id: string, status: string) {
-    return this.http.put(baseURL + 'saleRecords/editstatus/' + id, { status: status })
+  putInitialOrder(status: string): Observable<any> {
+    return this.http.put<any>(baseURL + 'initialOrder', { status: status })
       .pipe(catchError(error => this.ProcHttpMsgServ.handleError(error)));
-  }
+  };
 
+  deleteInitialOrder() {
+    return this.http.delete(baseURL + 'initialOrder')
+      .pipe(catchError(error => this.ProcHttpMsgServ.handleError(error)));
+  };
 }

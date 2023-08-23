@@ -1,0 +1,47 @@
+<div class="cart-sidebar-header bg-dark">
+   <h5>
+      <span class="text-secondary">سلة الشراء</span>
+      <span data-toggle="offcanvas" class="float-right" #cartClose>
+         <i class="mdi mdi-close"></i>
+      </span>
+   </h5>
+</div>
+<div class="cart-sidebar-body">
+   <div class="cart-list-product" *ngFor="let order of orders; let i = index">
+      <a class="float-right remove-cart" (click)="deleteOrder(i)"><i class="mdi mdi-close"></i></a>
+      <img class="img-fluid" src="{{baseURL + order.dish.img}}" alt="">
+      <h5><a>{{order.dish.name}}</a></h5>
+      <h6><strong *ngIf="order.plugins.length > 0"><span class="mdi mdi-approval"></span> الاضافات : </strong>
+         <strong *ngIf="order.plugins.length == 0"><span class="mdi mdi-approval"></span> لا يوجد اضافات </strong>
+         <span *ngFor="let plug of order.plugins" class="badge badge-pill bg-secondary text-dark">
+            {{plug.split(',')[0]}} </span>
+      </h6>
+      <div class="food-card_order-count">
+         <div class="input-group">
+            <div class="input-group-append">
+               <button class="btn btn-outline-secondary text-danger minus-btn" (click)="minusQuantity(i)"
+                  type="button"><i class="mdi mdi-minus-circle"></i></button>
+            </div>
+            <input type="text" class="form-control" placeholder="{{order.quantity}}" value="{{order.quantity}}"
+               name="quantity" disabled>
+            <div class="input-group-prepend">
+               <button class="btn btn-outline-light text-success add-btn" (click)="addQuantity(i)" type="button"><i
+                     class="mdi mdi-plus-circle"></i></button>
+            </div>
+         </div>
+      </div>
+      <p class="offer-price mb-0">{{order.bill}} ل.س</p>
+   </div>
+</div>
+<div class="cart-sidebar-footer">
+   <div class="cart-store-details">
+      <p>مجموع الطلبات<strong class="float-right text-secondary">{{total}} ل.س</strong></p>
+      <p>تكلفة التوصيل<strong class="float-right text-danger">+ {{delevaryPrice}} ل.س</strong></p>
+      <h6>&nbsp;<!-- اجمالي القيمة<strong class="float-right text-danger">{{total + delevaryPrice}} ل.س</strong> -->
+      </h6>
+   </div>
+   <a (click)="sendBayRequest()"><button class="btn btn-secondary btn-lg btn-block text-left" type="button"><span
+            class="float-left"><i class="mdi mdi-cart-outline"></i> اتمام العملية </span><span
+            class="float-right"><strong>{{total + delevaryPrice}} ل.س</strong> <span
+               class="mdi mdi-chevron-right"></span></span></button></a>
+</div>

@@ -40,6 +40,20 @@
    padding: 6px;
 }
 
+.list-body .badge.username {
+   direction: ltr;
+   margin: 0 auto;
+   display: block;
+   font-weight: 600;
+   font-size: 14px;
+   padding: 6px;
+   cursor: pointer;
+}
+
+.list-body .badge.username:hover {
+   color: blue !important;
+}
+
 .list-product {
    width: 95%;
    margin: 8px auto;

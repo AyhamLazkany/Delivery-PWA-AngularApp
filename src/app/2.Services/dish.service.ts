@@ -16,10 +16,10 @@ export class DishService {
   getDishes(resId?: string): Observable<Dish[]> {
     if (resId) {
       return this.http.get<Dish[]>(baseURL + `dishes?resId=${resId}`)
-      .pipe(catchError(this.ProcHttpMsgServ.handleError));
+        .pipe(catchError(this.ProcHttpMsgServ.handleError));
     } else {
       return this.http.get<Dish[]>(baseURL + `dishes`)
-      .pipe(catchError(this.ProcHttpMsgServ.handleError));
+        .pipe(catchError(this.ProcHttpMsgServ.handleError));
     }
   }
   postDishes(dish: any): Observable<Dish> {
@@ -38,6 +38,10 @@ export class DishService {
   }
   putDish(id: string, Dish: any): Observable<Dish> {
     return this.http.put<Dish>(baseURL + 'dishes/' + id, Dish)
+      .pipe(catchError(this.ProcHttpMsgServ.handleError));
+  }
+  putDishCounter(id: string): Observable<any> {
+    return this.http.put<any>(baseURL + 'dishes/addcounter/' + id, {})
       .pipe(catchError(this.ProcHttpMsgServ.handleError));
   }
   deleteDish(id: string): Observable<Dish> {

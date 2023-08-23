@@ -5,7 +5,7 @@
          <a routerLink="/home"><i class="mdi mdi-home"></i></a>
       </div>
       <div class="col" *ngIf="isLogged">
-         <a routerLink=""><i class="mdi mdi-heart"></i></a>
+         <a routerLink="/wishlist"><i class="mdi mdi-heart"></i></a>
       </div>
       <div class="col" *ngIf="!isLogged">
          <a (click)="OpenDialog()"><i class="mdi mdi-heart"></i></a>
@@ -14,7 +14,7 @@
          <a class="toggle"><i class="mdi mdi-menu"></i></a>
       </div>
       <div class="col" *ngIf="isLogged">
-         <a routerLink="/myaddress"><i class="mdi mdi-tag"></i></a>
+         <a routerLink="/orderlist"><i class="mdi mdi-cart"></i></a>
       </div>
       <div class="col" *ngIf="!isLogged">
          <a (click)="OpenDialog()"><i class="mdi mdi-tag"></i></a>

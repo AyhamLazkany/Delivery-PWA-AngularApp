@@ -5,19 +5,17 @@ import { AuthService } from '../2.Services/auth.service';
 import { BayRecService } from '../2.Services/bay-rec.service';
 import { SaleRecService } from '../2.Services/sale-rec.service';
 import { InitialOrderService } from '../2.Services/initial-order.service';
-import { ChangeValueService } from '../2.Services/change-value.service';
 
-interface Cart { _id: string, orders: Order[], status: string, total: number, date: string };
+interface Cart { _id: string, userId: string, username: string, orders: Order[], status: string, total: number, date: string };
 
 @Component({
-  selector: 'app-oreder-list',
-  templateUrl: './oreder-list.component.html',
-  styleUrls: ['./oreder-list.component.css']
+  selector: 'app-sales-list',
+  templateUrl: './sales-list.component.html',
+  styleUrls: ['./sales-list.component.css']
 })
-export class OrderListComponent implements OnInit {
+export class SalesListComponent implements OnInit {
 
-  user: User = { _id: '', addresses: [], admin: false, currAdd: '', phone: 0, username: '' };
-  userId!: string;
+  user: User = {};
   carts!: Cart[];
   errMssg!: string;
 
@@ -25,15 +23,13 @@ export class OrderListComponent implements OnInit {
     private authSrv: AuthService,
     private IOSrv: InitialOrderService,
     private BRSrv: BayRecService,
-    private SRSrv: SaleRecService,
-    private CVSrv: ChangeValueService) { }
+    private SRSrv: SaleRecService) { }
 
   ngOnInit() {
     this.authSrv.getUser(this.authSrv.getUsername())
       .subscribe((user) => {
         this.user = user;
-        this.CVSrv.currentUserId.subscribe((userId) => this.userId = userId);
-        this.BRSrv.getBayRecs().subscribe((carts) => {
+        this.SRSrv.getSaleRecs().subscribe((carts) => {
           this.carts = carts.reverse();
         }, err => this.errMssg = err);
       }, (errMssg) => this.errMssg = errMssg);
@@ -44,13 +40,24 @@ export class OrderListComponent implements OnInit {
     window.location.reload();
   }
 
-  cancelOrder(index: number, id: string) {
+  cancelOrder(index: number, id: string, userId: string) {
     this.SRSrv.putOrderStatus(id, 'ملغى').subscribe(() => {
-      this.BRSrv.putOrderStatus(id, 'ملغى', this.userId).subscribe((res) => {
-        console.log(this.userId);
+      this.BRSrv.putOrderStatus(id, 'ملغى', userId).subscribe(() => {
         this.carts[index].status = 'ملغى';
         this.IOSrv.deleteInitialOrder().subscribe();
       });
     });
   }
+
+  putStatus(index: number, id: string, status: string, userId: string) {
+    this.SRSrv.putOrderStatus(id, status).subscribe(() => {
+      this.BRSrv.putOrderStatus(id, status, userId).subscribe(() => {
+        this.IOSrv.putInitialOrder(status).subscribe((res) => {
+          this.carts[index].status = res.status;
+          if (status == 'مكتمل') this.IOSrv.deleteInitialOrder().subscribe();
+        });
+      });
+    });
+  }
+
 }

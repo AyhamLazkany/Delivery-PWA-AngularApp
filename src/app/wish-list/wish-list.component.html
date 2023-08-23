@@ -17,14 +17,71 @@
                         <a routerLink="/wishlist" class="list-group-item list-group-item-action active"><i
                               aria-hidden="true" class="mdi mdi-heart-outline"></i> المفضلة</a>
                         <a routerLink="/orderlist" class="list-group-item list-group-item-action"><i aria-hidden="true"
-                              class="mdi mdi-format-list-bulleted"></i> قائمة الطلبات</a>
+                              class="mdi mdi-cart"></i> قائمة الطلبات</a>
+                        <a *ngIf="user.admin" routerLink="/saleslist" class="list-group-item list-group-item-action"><i
+                              aria-hidden="true" class="mdi mdi-format-list-bulleted"></i> قائمة ألمبيعات</a>
+                        <a *ngIf="user.admin" routerLink="/basicinfo" class="list-group-item list-group-item-action"><i
+                              aria-hidden="true" class="mdi mdi-information-outline"></i> المعلومات الاساسية للتطبيق</a>
                         <a (click)="logout()" routerLink="" class="list-group-item list-group-item-action"><i
                               aria-hidden="true" class="mdi mdi-lock"></i> تسجيل الخروج</a>
                      </div>
                   </div>
                </div>
+
+               <div class="col-12 col-md-8 mx-0">
+                  <div class="owl-carousel favs col-12 mt-2 mt-md-5">
+                     <label class="item">
+                        <input type="radio" id="value-1" name="value-radio" value="المنتجات" (click)="displayDishes()"
+                           checked>
+                        <span>المنتجات</span>
+                     </label>
+                     <label class="item">
+                        <input type="radio" id="value-2" name="value-radio" value="المحال" (click)="unDisplayDishes()">
+                        <span>المحال</span>
+                     </label>
+                  </div><br>
+                  <div *ngIf="showDishes" class="col-12 mt-2 mt-md-5">
+                     <div class="col-4 col-sm-3 col-md-2 mx-auto" *ngFor="let dish of dishes; let i = index"
+                        (click)="selectDish(dish)">
+                        <article class="dish-card" data-target="#dish-card" data-toggle="modal">
+                           <img class="dish-card__image" src="{{baseURL + dish.img}}" />
+                           <div class="dish-card__data">
+                              <h2 class="dish-card__info">
+                                 {{dish.name}}
+                              </h2>
+                              <h3 class="dish-card__price">{{dish.price}} ل.س</h3>
+                              <button class="dish-card__add" (click)="unLikeDish(dish._id, i)"><span
+                                    class="mdi mdi-heart"></span></button>
+                           </div>
+                        </article>
+                     </div>
+                  </div>
+                  <div *ngIf="!showDishes" class="col-12 mt-2 mt-md-5 px-0">
+                     <div class="col-6 px-2 px-md-3" *ngFor="let res of restaurants; let i = index">
+                        <div class="product">
+                           <a routerLink="/restaurantDetails/{{res._id}}">
+                              <div class="product-header">
+                                 <img class="img-fluid" src="{{baseURL + res.img}}">
+                                 <span *ngIf="res.openned" class="veg text-success mdi mdi-circle"></span>
+                                 <span *ngIf="!res.openned" class="veg text-danger mdi mdi-circle"></span>
+                              </div>
+                              <div class="product-body">
+                                 <h5>{{res.name}}</h5>
+                                 <span (click)="unLikeRestaurant(res._id, i)"
+                                    class="favorite mdi mdi-heart text-danger"></span>
+                                 <h6><strong><span class="mdi mdi-approval"></span>نوع المطعم :</strong> {{res.type}}
+                                 </h6>
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
             </div>
          </div>
       </div>
    </div>
 </section>
+<app-dish-details-card #dishDetail [dish]="dish" class="modal fade dishcardmodal" id="dish-card">
+</app-dish-details-card>

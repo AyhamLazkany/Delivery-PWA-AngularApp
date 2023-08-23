@@ -14,18 +14,24 @@
             <h1 class="modal-dish-card__info">
                {{dish.name}}
             </h1>
+            <h1 *ngIf="!isFav" (click)="changeFav()" class="favorite">
+               <span class="mdi mdi-heart-outline border border-dark rounded m-1 p-1"></span>
+            </h1>
+            <h1 *ngIf="isFav" (click)="changeFav()" class="favorite">
+               <span class="mdi mdi-heart text-danger border border-danger rounded m-1 p-1"></span>
+            </h1>
             <p class="modal-dish-card__info">
                {{dish.description}}
             </p>
-            <h2 class="modal-dish-card__info">
+            <h2 class="modal-dish-card__info" *ngIf="hasPlugins">
                الإضافات
             </h2>
-            <div class="modal-dish-card__info">
+            <div class="modal-dish-card__info" *ngIf="hasPlugins">
                <div class="row w-100 mx-auto mb-2 dish-radio-input" *ngIf="hasBread">
                   <div class="col-6 pr-0">
                      <div class="form-check text-center">
                         <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                           value="{{dish.plugins[0]}}" (change)="breadOption($event)">
+                           value="{{dish.plugins[0]}}" (change)="breadOption($event)" checked>
                         <label class="form-check-label" for="gridRadios1">
                            {{dish.plugins[0].split(',')[0] + ' ' + dish.plugins[0].split(',')[1] + '+'}}
                         </label>

@@ -36,6 +36,10 @@ import { CreatDishComponent } from './creat-dish/creat-dish.component';
 import { EditDishComponent } from './edit-dish/edit-dish.component';
 import { CreatCategoryComponent } from './creat-category/creat-category.component';
 import { DishDetailsCardComponent } from './dish-details-card/dish-details-card.component';
+import { SalesListComponent } from './sales-list/sales-list.component';
+import { CartSidebarComponent } from './cart-sidebar/cart-sidebar.component';
+import { OrderTrackingComponent } from './order-tracking/order-tracking.component';
+import { BasicInfoComponent } from './basic-info/basic-info.component';
 
 
 @NgModule({
@@ -55,7 +59,11 @@ import { DishDetailsCardComponent } from './dish-details-card/dish-details-card.
     CreatDishComponent,
     EditDishComponent,
     CreatCategoryComponent,
-    DishDetailsCardComponent
+    DishDetailsCardComponent,
+    SalesListComponent,
+    CartSidebarComponent,
+    OrderTrackingComponent,
+    BasicInfoComponent
   ],
   imports: [
     BrowserModule,

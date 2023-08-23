@@ -68,5 +68,6 @@ export class MyAddressComponent implements OnInit {
 
   logout() {
     this.authSrv.logOut();
+    window.location.reload();
   }
 }
